@@ -1,143 +1,1131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rehan Shafique | Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .gradient-text {
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        html { scroll-behavior: smooth; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+        content="Rehan Shafique — AI Developer, Machine Learning Engineer & Bioinformatics Student at UAF Pakistan. Portfolio showcasing AI projects, skills, and research." />
+  <meta name="keywords"
+        content="Rehan Shafique, AI Developer, Machine Learning, Bioinformatics, Pakistan, UAF, Skin Cancer Prediction" />
+  <meta property="og:title" content="Rehan Shafique | AI Developer Portfolio" />
+  <meta property="og:description" content="AI Developer · ML Engineer · Bioinformatics Researcher" />
+  <title>Rehan Shafique | AI Developer & Bioinformatics Student</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Clash+Display:wght@400;600;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      darkMode: ['attribute', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            mono: ['"Space Mono"', 'monospace'],
+          },
+          colors: {
+            brand: { cyan:'#22d3ee', blue:'#6366f1', pink:'#f472b6' },
+            dark:  { 900:'#020b18', 800:'#050f22', 700:'#0a1628', 600:'#0f1f3d', 500:'#1e3a5f' },
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s ease-in-out infinite',
+            'slide-up': 'slideUp .7s ease both',
+            'fade-in':  'fadeIn .9s ease both',
+          },
+          keyframes: {
+            float:   { '0%,100%':{ transform:'translateY(0)' }, '50%':{ transform:'translateY(-12px)' } },
+            slideUp: { from:{ opacity:0, transform:'translateY(40px)' }, to:{ opacity:1, transform:'translateY(0)' } },
+            fadeIn:  { from:{ opacity:0 }, to:{ opacity:1 } },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ─── CSS Variables ─────────────────────────────────── */
+    :root{
+      --bg-900:#020b18; --bg-800:#050f22; --bg-700:#0a1628;
+      --bg-600:#0f1f3d; --border:#1e3a5f;
+      --cyan:#22d3ee;   --blue:#6366f1;   --pink:#f472b6;
+      --text-primary:#f8fafc; --text-secondary:#94a3b8; --text-muted:#475569;
+    }
+    [data-theme="light"]{
+      --bg-900:#f0f4ff; --bg-800:#e8effd; --bg-700:#dce7fb;
+      --bg-600:#cfdaf8; --border:#b6c9f0;
+      --text-primary:#0f172a; --text-secondary:#334155; --text-muted:#64748b;
+    }
+
+    /* ─── Base ──────────────────────────────────────────── */
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; }
+    body{
+      background:var(--bg-900);
+      color:var(--text-primary);
+      font-family:'Syne',sans-serif;
+      overflow-x:hidden;
+      transition:background .4s,color .4s;
+    }
+
+    /* ─── Scrollbar ─────────────────────────────────────── */
+    ::-webkit-scrollbar{ width:5px; }
+    ::-webkit-scrollbar-track{ background:var(--bg-800); }
+    ::-webkit-scrollbar-thumb{ background:linear-gradient(var(--cyan),var(--blue)); border-radius:99px; }
+
+    /* ─── Selection ─────────────────────────────────────── */
+    ::selection{ background:rgba(34,211,238,.25); color:var(--text-primary); }
+
+    /* ─── Noise overlay ─────────────────────────────────── */
+    body::before{
+      content:'';
+      position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events:none; z-index:0; opacity:.5;
+    }
+
+    /* ─── Animated grid background ──────────────────────── */
+    .grid-bg{
+      position:fixed; inset:0; z-index:0; pointer-events:none;
+      background-image:
+        linear-gradient(rgba(34,211,238,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34,211,238,.03) 1px, transparent 1px);
+      background-size:60px 60px;
+    }
+
+    /* ─── Glow orbs ─────────────────────────────────────── */
+    .orb{
+      position:fixed; border-radius:50%;
+      filter:blur(100px); pointer-events:none; z-index:0;
+    }
+    .orb-1{
+      width:520px;height:520px;
+      background:radial-gradient(circle, rgba(99,102,241,.18), transparent 70%);
+      top:-120px; left:-120px;
+      animation:float 8s ease-in-out infinite;
+    }
+    .orb-2{
+      width:420px;height:420px;
+      background:radial-gradient(circle, rgba(34,211,238,.12), transparent 70%);
+      bottom:-80px; right:-80px;
+      animation:float 10s ease-in-out 2s infinite reverse;
+    }
+    .orb-3{
+      width:300px;height:300px;
+      background:radial-gradient(circle, rgba(244,114,182,.1), transparent 70%);
+      top:50%; left:50%; transform:translate(-50%,-50%);
+      animation:float 12s ease-in-out 4s infinite;
+    }
+
+    /* ─── Navbar ─────────────────────────────────────────── */
+    #navbar{
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      transition:all .4s;
+    }
+    #navbar.scrolled{
+      background:rgba(5,15,34,.85);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+      box-shadow:0 4px 30px rgba(0,0,0,.4);
+    }
+    .nav-link{
+      position:relative; font-size:.85rem; font-weight:600;
+      color:var(--text-secondary); transition:color .2s;
+      font-family:'Space Mono',monospace;
+    }
+    .nav-link::after{
+      content:''; position:absolute; bottom:-4px; left:0; right:0;
+      height:1px; background:linear-gradient(90deg,var(--cyan),var(--blue));
+      transform:scaleX(0); transition:transform .3s;
+    }
+    .nav-link:hover{ color:var(--cyan); }
+    .nav-link:hover::after{ transform:scaleX(1); }
+
+    /* ─── Gradient text ─────────────────────────────────── */
+    .grad{
+      background:linear-gradient(135deg,var(--cyan) 0%,var(--blue) 50%,var(--pink) 100%);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    /* ─── Typing cursor ─────────────────────────────────── */
+    .cursor{
+      display:inline-block; width:3px; height:1.1em;
+      background:var(--cyan); border-radius:2px;
+      animation:blink 1s step-end infinite;
+      vertical-align:sub; margin-left:3px;
+    }
+    @keyframes blink{ 0%,100%{ opacity:1 } 50%{ opacity:0 } }
+
+    /* ─── Glass card ─────────────────────────────────────── */
+    .glass{
+      background:rgba(10,22,40,.6);
+      border:1px solid rgba(30,58,95,.6);
+      border-radius:20px;
+      backdrop-filter:blur(16px);
+      transition:border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .glass:hover{
+      border-color:rgba(34,211,238,.35);
+      transform:translateY(-4px);
+      box-shadow:0 12px 40px rgba(34,211,238,.08);
+    }
+    [data-theme="light"] .glass{
+      background:rgba(255,255,255,.7);
+      border-color:rgba(182,201,240,.7);
+    }
+
+    /* ─── Buttons ────────────────────────────────────────── */
+    .btn-primary{
+      display:inline-flex; align-items:center; gap:.45rem;
+      background:linear-gradient(135deg,var(--cyan),var(--blue));
+      color:#fff; font-weight:700; font-size:.9rem;
+      padding:.7rem 1.8rem; border-radius:10px;
+      border:none; cursor:pointer; transition:opacity .2s, transform .2s;
+      text-decoration:none; font-family:'Syne',sans-serif;
+    }
+    .btn-primary:hover{ opacity:.85; transform:translateY(-2px); }
+
+    .btn-outline{
+      display:inline-flex; align-items:center; gap:.45rem;
+      background:transparent;
+      color:var(--cyan);
+      border:1px solid var(--cyan);
+      font-weight:700; font-size:.9rem;
+      padding:.65rem 1.75rem; border-radius:10px;
+      cursor:pointer; transition:all .2s;
+      text-decoration:none; font-family:'Syne',sans-serif;
+    }
+    .btn-outline:hover{
+      background:rgba(34,211,238,.1);
+      transform:translateY(-2px);
+    }
+
+    /* ─── Section ────────────────────────────────────────── */
+    .section{ position:relative; z-index:1; padding:6rem 0; }
+    .section-label{
+      font-family:'Space Mono',monospace;
+      font-size:.78rem; letter-spacing:.14em;
+      color:var(--cyan); margin-bottom:.6rem;
+    }
+    .section-title{
+      font-size:2.6rem; font-weight:800;
+      line-height:1.1; margin-bottom:.5rem;
+    }
+    .section-sub{
+      color:var(--text-secondary); font-size:1.05rem; max-width:560px;
+    }
+
+    /* ─── Skill bar ──────────────────────────────────────── */
+    .skill-track{
+      background:rgba(30,58,95,.4); border-radius:999px;
+      height:6px; overflow:hidden; margin-top:.3rem;
+    }
+    .skill-fill{
+      height:100%; border-radius:999px;
+      background:linear-gradient(90deg,var(--cyan),var(--blue));
+      width:0; transition:width 1.4s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ─── Skill badge ────────────────────────────────────── */
+    .badge{
+      display:inline-block;
+      background:rgba(34,211,238,.1);
+      border:1px solid rgba(34,211,238,.25);
+      color:var(--cyan);
+      border-radius:999px;
+      padding:.28rem .85rem;
+      font-size:.75rem; font-family:'Space Mono',monospace;
+      font-weight:700; margin:.22rem;
+      transition:background .2s, transform .2s;
+    }
+    .badge:hover{
+      background:rgba(34,211,238,.2);
+      transform:scale(1.05);
+    }
+
+    /* ─── Project card ───────────────────────────────────── */
+    .proj-card{
+      position:relative; overflow:hidden;
+      background:rgba(10,22,40,.7);
+      border:1px solid rgba(30,58,95,.6);
+      border-radius:22px; padding:2rem;
+      transition:all .35s;
+    }
+    .proj-card::before{
+      content:''; position:absolute;
+      inset:0; border-radius:22px;
+      background:linear-gradient(135deg,rgba(34,211,238,.05),transparent 60%);
+      opacity:0; transition:opacity .35s;
+    }
+    .proj-card:hover{ border-color:rgba(34,211,238,.4); transform:translateY(-6px); }
+    .proj-card:hover::before{ opacity:1; }
+
+    /* ─── Service card ───────────────────────────────────── */
+    .service-card{
+      text-align:center; padding:2.2rem 1.6rem;
+    }
+    .service-icon{
+      width:60px; height:60px; border-radius:16px;
+      background:linear-gradient(135deg,rgba(34,211,238,.15),rgba(99,102,241,.15));
+      border:1px solid rgba(34,211,238,.25);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.5rem; margin:0 auto 1.1rem;
+      transition:transform .3s;
+    }
+    .service-card:hover .service-icon{ transform:scale(1.12) rotate(-5deg); }
+
+    /* ─── Timeline (About) ───────────────────────────────── */
+    .timeline-item::before{
+      content:''; position:absolute; left:-21px; top:6px;
+      width:10px; height:10px; border-radius:50%;
+      background:linear-gradient(135deg,var(--cyan),var(--blue));
+      box-shadow:0 0 8px rgba(34,211,238,.6);
+    }
+
+    /* ─── Contact form ───────────────────────────────────── */
+    .form-input{
+      width:100%; padding:.75rem 1.1rem;
+      background:rgba(10,22,40,.8);
+      border:1px solid var(--border);
+      border-radius:10px; color:var(--text-primary);
+      font-family:'Syne',sans-serif; font-size:.92rem;
+      transition:border-color .25s, box-shadow .25s;
+      outline:none;
+    }
+    .form-input:focus{
+      border-color:var(--cyan);
+      box-shadow:0 0 0 3px rgba(34,211,238,.12);
+    }
+    [data-theme="light"] .form-input{
+      background:rgba(255,255,255,.9);
+      border-color:var(--border);
+    }
+
+    /* ─── Back to top ────────────────────────────────────── */
+    #back-top{
+      position:fixed; bottom:2rem; right:2rem;
+      width:46px; height:46px; border-radius:12px; z-index:900;
+      background:linear-gradient(135deg,var(--cyan),var(--blue));
+      display:flex; align-items:center; justify-content:center;
+      color:#fff; font-size:1.1rem; cursor:pointer;
+      opacity:0; transform:translateY(20px);
+      transition:opacity .3s, transform .3s;
+      border:none; box-shadow:0 6px 20px rgba(34,211,238,.3);
+    }
+    #back-top.show{ opacity:1; transform:translateY(0); }
+    #back-top:hover{ opacity:.85; }
+
+    /* ─── Theme toggle ───────────────────────────────────── */
+    #theme-btn{
+      width:40px; height:40px; border-radius:10px;
+      background:rgba(30,58,95,.4); border:1px solid var(--border);
+      color:var(--text-secondary); font-size:1rem;
+      cursor:pointer; transition:all .2s;
+      display:flex; align-items:center; justify-content:center;
+    }
+    #theme-btn:hover{ border-color:var(--cyan); color:var(--cyan); }
+
+    /* ─── Mobile menu ────────────────────────────────────── */
+    #mobile-menu{
+      display:none;
+      position:fixed; top:0; left:0; right:0; bottom:0;
+      background:rgba(2,11,24,.97); z-index:999;
+      flex-direction:column; align-items:center; justify-content:center; gap:2.4rem;
+    }
+    #mobile-menu.open{ display:flex; }
+
+    /* ─── Scroll reveal ──────────────────────────────────── */
+    .reveal{
+      opacity:0; transform:translateY(30px);
+      transition:opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible{
+      opacity:1; transform:translateY(0);
+    }
+
+    /* ─── Hero section ───────────────────────────────────── */
+    #hero{
+      min-height:100vh; display:flex; align-items:center;
+      padding-top:6rem;
+    }
+
+    /* ─── Responsive ─────────────────────────────────────── */
+    @media(max-width:768px){
+      .section-title{ font-size:2rem; }
+      #hero h1 { font-size:2.4rem !important; }
+    }
+  </style>
 </head>
-<body class="bg-gray-900 text-gray-100 font-sans">
 
-    <!-- Navbar -->
-    <nav class="fixed w-full z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold gradient-text">RS.</h1>
-            <div class="space-x-8 hidden md:flex">
-                <a href="#home" class="hover:text-blue-400 transition">Home</a>
-                <a href="#about" class="hover:text-blue-400 transition">About</a>
-                <a href="#skills" class="hover:text-blue-400 transition">Skills</a>
-                <a href="#projects" class="hover:text-blue-400 transition">Projects</a>
-                <a href="#contact" class="px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition">Hire Me</a>
+<body>
+
+<!-- ─── Decorative background ─────────────────────────── -->
+<div class="grid-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- ════════════════════════════════════════════════════════
+     N A V B A R
+═════════════════════════════════════════════════════════ -->
+<nav id="navbar" class="w-full py-4">
+  <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#hero" class="flex items-center gap-2.5">
+      <div class="w-9 h-9 rounded-xl flex items-center justify-center text-lg"
+           style="background:linear-gradient(135deg,var(--cyan),var(--blue));">🧬</div>
+      <span class="font-display font-bold text-base" style="color:var(--text-primary);">
+        Rehan<span class="grad">.</span>
+      </span>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#about"    class="nav-link">About</a>
+      <a href="#skills"   class="nav-link">Skills</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#contact"  class="nav-link">Contact</a>
+    </div>
+
+    <!-- Right controls -->
+    <div class="flex items-center gap-3">
+      <button id="theme-btn" aria-label="Toggle theme">🌙</button>
+      <!-- Mobile hamburger -->
+      <button id="hamburger" class="md:hidden flex flex-col gap-1.5 p-2"
+              style="color:var(--text-secondary);">
+        <span class="block w-6 h-0.5 bg-current rounded transition-all"></span>
+        <span class="block w-6 h-0.5 bg-current rounded transition-all"></span>
+        <span class="block w-6 h-0.5 bg-current rounded transition-all"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu overlay -->
+<div id="mobile-menu">
+  <button id="close-menu" class="absolute top-6 right-6 text-3xl"
+          style="color:var(--text-secondary);">✕</button>
+  <a href="#about"    class="text-2xl font-bold"  style="color:var(--text-primary);" onclick="closeMobileMenu()">About</a>
+  <a href="#skills"   class="text-2xl font-bold"  style="color:var(--text-primary);" onclick="closeMobileMenu()">Skills</a>
+  <a href="#projects" class="text-2xl font-bold"  style="color:var(--text-primary);" onclick="closeMobileMenu()">Projects</a>
+  <a href="#services" class="text-2xl font-bold"  style="color:var(--text-primary);" onclick="closeMobileMenu()">Services</a>
+  <a href="#contact"  class="text-2xl font-bold"  style="color:var(--text-primary);" onclick="closeMobileMenu()">Contact</a>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     H E R O
+═════════════════════════════════════════════════════════ -->
+<section id="hero" class="relative z-10">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="max-w-3xl">
+
+      <div class="section-label mb-4">// WELCOME TO MY PORTFOLIO</div>
+
+      <!-- Typing heading -->
+      <h1 id="hero-heading"
+          style="font-size:3.8rem;font-weight:800;line-height:1.1;margin-bottom:.8rem;">
+        <span id="typing-target"></span><span class="cursor"></span>
+      </h1>
+
+      <p class="text-xl font-semibold mb-2" style="color:var(--cyan);">
+        AI Developer &nbsp;·&nbsp; Machine Learning Engineer &nbsp;·&nbsp; Bioinformatics Student
+      </p>
+      <p style="color:var(--text-secondary);font-size:1.05rem;line-height:1.8;max-width:580px;margin-bottom:2.4rem;">
+        Building intelligent systems at the intersection of
+        <strong style="color:var(--cyan);">Artificial Intelligence</strong> and
+        <strong style="color:var(--blue);">Bioinformatics</strong> — turning biological data into
+        life-saving solutions.
+      </p>
+
+      <div class="flex flex-wrap gap-4 items-center">
+        <a href="#projects" class="btn-primary">
+          <i class="fas fa-rocket"></i> View Projects
+        </a>
+        <a href="#contact" class="btn-outline">
+          <i class="fas fa-paper-plane"></i> Contact Me
+        </a>
+        <a href="mailto:rehanshafiq6540@gmail.com" class="btn-outline"
+           download style="border-color:var(--blue);color:var(--blue);">
+          <i class="fas fa-download"></i> Download CV
+        </a>
+      </div>
+
+      <!-- Quick stats row -->
+      <div class="flex flex-wrap gap-5 mt-14">
+        <div class="glass px-5 py-3 flex items-center gap-3">
+          <span style="font-size:1.5rem;">🧠</span>
+          <div>
+            <div class="font-bold" style="color:var(--text-primary);">Expert</div>
+            <div style="font-size:.74rem;color:var(--text-muted);">AI / ML</div>
+          </div>
+        </div>
+        <div class="glass px-5 py-3 flex items-center gap-3">
+          <span style="font-size:1.5rem;">🧬</span>
+          <div>
+            <div class="font-bold" style="color:var(--text-primary);">Researcher</div>
+            <div style="font-size:.74rem;color:var(--text-muted);">Bioinformatics</div>
+          </div>
+        </div>
+        <div class="glass px-5 py-3 flex items-center gap-3">
+          <span style="font-size:1.5rem;">🚀</span>
+          <div>
+            <div class="font-bold" style="color:var(--text-primary);">5+ Projects</div>
+            <div style="font-size:.74rem;color:var(--text-muted);">Deployed</div>
+          </div>
+        </div>
+        <div class="glass px-5 py-3 flex items-center gap-3">
+          <span style="font-size:1.5rem;">🎓</span>
+          <div>
+            <div class="font-bold" style="color:var(--text-primary);">UAF</div>
+            <div style="font-size:.74rem;color:var(--text-muted);">Pakistan</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     A B O U T
+═════════════════════════════════════════════════════════ -->
+<section id="about" class="section">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="section-label reveal">// ABOUT ME</div>
+    <h2 class="section-title grad reveal">Who Am I?</h2>
+    <p class="section-sub mb-14 reveal">A passionate problem-solver at the crossroads of AI and life science.</p>
+
+    <div class="grid md:grid-cols-2 gap-10 items-start">
+
+      <!-- Bio -->
+      <div class="reveal">
+        <div class="glass p-8 h-full">
+          <p style="color:var(--text-secondary);line-height:1.9;font-size:.98rem;margin-bottom:1.1rem;">
+            I'm <strong style="color:var(--cyan);">Rehan Shafique</strong>, an AI Developer and
+            Bioinformatics student at the
+            <strong style="color:var(--blue);">University of Agriculture Faisalabad (UAF), Pakistan</strong>.
+            I specialise in building end-to-end machine learning pipelines and deploying intelligent
+            web applications that solve real-world healthcare and research challenges.
+          </p>
+          <p style="color:var(--text-secondary);line-height:1.9;font-size:.98rem;margin-bottom:1.1rem;">
+            My academic foundation in <strong style="color:var(--cyan);">Bioinformatics</strong>
+            gives me a unique lens through which I apply Deep Learning to genomics, proteomics, and
+            medical imaging. My flagship project — a
+            <em>Skin Cancer Prediction System</em> — exemplifies my commitment to AI for social good.
+          </p>
+          <p style="color:var(--text-muted);line-height:1.9;font-size:.92rem;">
+            Beyond coding, I contribute to open-source, write technical articles, and mentor junior
+            developers. I believe the future of medicine will be written in Python.
+          </p>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="reveal">
+        <div class="glass p-8 h-full">
+          <h3 class="font-bold text-lg mb-6" style="color:var(--text-primary);">
+            🗓️ Journey
+          </h3>
+          <div class="border-l-2 pl-6 space-y-8"
+               style="border-color:var(--border); position:relative;">
+            <div class="relative timeline-item">
+              <div class="text-sm font-bold" style="color:var(--cyan);">2022 — Present</div>
+              <div class="font-bold mt-0.5" style="color:var(--text-primary);">B.Sc. Bioinformatics</div>
+              <div style="color:var(--text-muted);font-size:.85rem;">University of Agriculture Faisalabad</div>
             </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="h-screen flex items-center justify-center pt-20">
-        <div class="text-center" data-aos="fade-up">
-            <h2 class="text-5xl md:text-7xl font-extrabold mb-4">Hi, I'm <span class="gradient-text">Rehan Shafique</span></h2>
-            <p class="text-xl text-gray-400 mb-8 italic">Bioinformatics Student & Full-Stack Developer</p>
-            <div class="flex justify-center gap-4">
-                <a href="#projects" class="px-8 py-3 border border-blue-500 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white transition">View Work</a>
-                <a href="#contact" class="px-8 py-3 bg-blue-600 rounded-full hover:bg-blue-700 transition">Contact</a>
+            <div class="relative timeline-item">
+              <div class="text-sm font-bold" style="color:var(--cyan);">2023</div>
+              <div class="font-bold mt-0.5" style="color:var(--text-primary);">Machine Learning Deep-Dive</div>
+              <div style="color:var(--text-muted);font-size:.85rem;">Self-study — Coursera, Fast.ai, TensorFlow docs</div>
             </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-gray-800/50">
-        <div class="max-w-4xl mx-auto px-4">
-            <h3 class="text-3xl font-bold mb-10 text-center" data-aos="fade-right">About Me</h3>
-            <div class="grid md:grid-cols-2 gap-10 items-center">
-                <div data-aos="zoom-in">
-                    <div class="w-full h-80 bg-gray-700 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-600">
-                        <span class="text-gray-500">[ Profile Image ]</span>
-                    </div>
-                </div>
-                <div data-aos="fade-left">
-                    <p class="text-gray-300 leading-relaxed text-lg">
-                        Currently in my 7th semester of BS Bioinformatics, I bridge the gap between complex biological data and scalable software solutions. 
-                        With a strong foundation in Python and Java, I specialize in building AI-integrated tools and analyzing genetic sequences.
-                    </p>
-                </div>
+            <div class="relative timeline-item">
+              <div class="text-sm font-bold" style="color:var(--cyan);">2024</div>
+              <div class="font-bold mt-0.5" style="color:var(--text-primary);">Skin Cancer Prediction System</div>
+              <div style="color:var(--text-muted);font-size:.85rem;">First deployed AI healthcare application</div>
             </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="py-20">
-        <div class="max-w-6xl mx-auto px-4">
-            <h3 class="text-3xl font-bold mb-12 text-center">Tech Stack</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                <div class="p-6 bg-gray-800 rounded-xl hover:border-blue-500 border border-transparent transition" data-aos="flip-up">
-                    <i class="fab fa-python text-4xl text-blue-400 mb-4"></i>
-                    <p class="font-bold">Python / Biopython</p>
-                </div>
-                <div class="p-6 bg-gray-800 rounded-xl hover:border-blue-500 border border-transparent transition" data-aos="flip-up" data-aos-delay="100">
-                    <i class="fab fa-java text-4xl text-orange-400 mb-4"></i>
-                    <p class="font-bold">Java</p>
-                </div>
-                <div class="p-6 bg-gray-800 rounded-xl hover:border-blue-500 border border-transparent transition" data-aos="flip-up" data-aos-delay="200">
-                    <i class="fas fa-database text-4xl text-green-400 mb-4"></i>
-                    <p class="font-bold">R Language</p>
-                </div>
-                <div class="p-6 bg-gray-800 rounded-xl hover:border-blue-500 border border-transparent transition" data-aos="flip-up" data-aos-delay="300">
-                    <i class="fab fa-html5 text-4xl text-red-400 mb-4"></i>
-                    <p class="font-bold">HTML5 / CSS3 / JS</p>
-                </div>
+            <div class="relative timeline-item">
+              <div class="text-sm font-bold" style="color:var(--cyan);">2025 — Present</div>
+              <div class="font-bold mt-0.5" style="color:var(--text-primary);">AI Developer — Freelance & Research</div>
+              <div style="color:var(--text-muted);font-size:.85rem;">Multiple ML projects &amp; open-source contributions</div>
             </div>
+          </div>
         </div>
-    </section>
+      </div>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 bg-gray-800/50">
-        <div class="max-w-6xl mx-auto px-4">
-            <h3 class="text-3xl font-bold mb-12 text-center">Featured Projects</h3>
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Project 1 -->
-                <div class="bg-gray-900 p-6 rounded-2xl shadow-xl overflow-hidden group" data-aos="fade-up">
-                    <div class="h-48 bg-blue-900/20 rounded-xl mb-4 flex items-center justify-center group-hover:bg-blue-900/40 transition">
-                        <i class="fas fa-microscope text-5xl text-blue-500"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-2">SkinScan AI</h4>
-                    <p class="text-gray-400 mb-4">A deep learning model for skin lesion classification and analysis.</p>
-                    <div class="flex gap-2">
-                        <span class="text-xs bg-gray-800 px-2 py-1 rounded">Python</span>
-                        <span class="text-xs bg-gray-800 px-2 py-1 rounded">ML</span>
-                        <span class="text-xs bg-gray-800 px-2 py-1 rounded">Bioinformatics</span>
-                    </div>
-                </div>
-                <!-- Project 2 -->
-                <div class="bg-gray-900 p-6 rounded-2xl shadow-xl overflow-hidden group" data-aos="fade-up" data-aos-delay="100">
-                    <div class="h-48 bg-purple-900/20 rounded-xl mb-4 flex items-center justify-center group-hover:bg-purple-900/40 transition">
-                        <i class="fas fa-dna text-5xl text-purple-500"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-2">Sequence Analysis Tool</h4>
-                    <p class="text-gray-400 mb-4">Custom application for genetic sequence validation and alignment.</p>
-                    <div class="flex gap-2">
-                        <span class="text-xs bg-gray-800 px-2 py-1 rounded">Biopython</span>
-                        <span class="text-xs bg-gray-800 px-2 py-1 rounded">R</span>
-                    </div>
-                </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     S K I L L S
+═════════════════════════════════════════════════════════ -->
+<section id="skills" class="section"
+         style="background:linear-gradient(180deg,transparent,rgba(10,22,40,.4),transparent);">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="section-label reveal">// TECHNICAL SKILLS</div>
+    <h2 class="section-title grad reveal">What I Know</h2>
+    <p class="section-sub mb-14 reveal">A toolkit forged through research, projects, and relentless learning.</p>
+
+    <div class="grid md:grid-cols-2 gap-10">
+
+      <!-- Proficiency bars -->
+      <div class="reveal glass p-8">
+        <h3 class="font-bold text-lg mb-7" style="color:var(--text-primary);">📊 Proficiency</h3>
+        <div id="skill-bars" class="space-y-5">
+          <!-- injected by JS -->
+        </div>
+      </div>
+
+      <!-- Badge cloud -->
+      <div>
+        <div class="reveal glass p-8 mb-6">
+          <h3 class="font-bold text-lg mb-4" style="color:var(--text-primary);">⚡ Technologies</h3>
+          <div id="badge-cloud">
+            <!-- injected by JS -->
+          </div>
+        </div>
+        <!-- Tool groups -->
+        <div class="grid grid-cols-3 gap-4 reveal">
+          <div class="glass p-4">
+            <div class="text-sm font-bold mb-3" style="color:var(--cyan);">🤖 AI / ML</div>
+            <ul class="space-y-1" style="color:var(--text-muted);font-size:.8rem;">
+              <li>TensorFlow</li><li>Keras</li><li>Scikit-learn</li><li>OpenCV</li><li>PyTorch</li>
+            </ul>
+          </div>
+          <div class="glass p-4">
+            <div class="text-sm font-bold mb-3" style="color:var(--blue);">📊 Data</div>
+            <ul class="space-y-1" style="color:var(--text-muted);font-size:.8rem;">
+              <li>Pandas</li><li>NumPy</li><li>Matplotlib</li><li>Seaborn</li><li>Plotly</li>
+            </ul>
+          </div>
+          <div class="glass p-4">
+            <div class="text-sm font-bold mb-3" style="color:var(--pink);">🚀 Dev</div>
+            <ul class="space-y-1" style="color:var(--text-muted);font-size:.8rem;">
+              <li>Streamlit</li><li>Git/GitHub</li><li>Jupyter</li><li>VS Code</li><li>Linux</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     P R O J E C T S
+═════════════════════════════════════════════════════════ -->
+<section id="projects" class="section">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="section-label reveal">// MY WORK</div>
+    <h2 class="section-title grad reveal">Featured Projects</h2>
+    <p class="section-sub mb-14 reveal">
+      Building AI solutions that make a real difference in healthcare and science.
+    </p>
+
+    <!-- Featured card (full width) -->
+    <div class="proj-card reveal mb-8" style="border:1px solid rgba(34,211,238,.35);">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <!-- Left: info -->
+        <div>
+          <div class="section-label mb-2">// FEATURED</div>
+          <h3 style="font-size:1.7rem;font-weight:800;color:var(--text-primary);margin-bottom:.7rem;">
+            🩺 Skin Cancer Prediction System
+          </h3>
+          <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:1.1rem;">
+            AI-powered skin lesion detection using Convolutional Neural Networks trained on the
+            HAM10000 dermatoscopy dataset. Classifies 7 lesion categories with high diagnostic accuracy.
+            Deployed as a live, interactive Streamlit web application with real-time inference.
+          </p>
+          <div class="mb-5">
+            <span class="badge">TensorFlow</span>
+            <span class="badge">CNN</span>
+            <span class="badge">Keras</span>
+            <span class="badge">Streamlit</span>
+            <span class="badge">Medical AI</span>
+            <span class="badge">OpenCV</span>
+            <span class="badge">HAM10000</span>
+          </div>
+          <div class="flex gap-3 flex-wrap">
+            <a class="btn-primary"
+               href="https://skincancerpredictions.streamlit.app/"
+               target="_blank" rel="noopener">
+              <i class="fas fa-external-link-alt"></i> 👉 Open Live Project
+            </a>
+            <a class="btn-outline" href="https://github.com/" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+          </div>
+        </div>
+        <!-- Right: visual -->
+        <div style="position:relative;">
+          <div class="glass p-6 text-center"
+               style="background:rgba(34,211,238,.05);border-color:rgba(34,211,238,.25);">
+            <div style="font-size:5rem;margin-bottom:.8rem;">🩺</div>
+            <div style="font-size:.78rem;font-family:'Space Mono',monospace;color:var(--cyan);
+                 letter-spacing:.1em;margin-bottom:1rem;">LIVE DEPLOYMENT</div>
+            <div class="space-y-2 text-left text-sm" style="color:var(--text-secondary);">
+              <div class="flex items-center gap-2">
+                <span style="color:var(--cyan);">✓</span> CNN-based classification
+              </div>
+              <div class="flex items-center gap-2">
+                <span style="color:var(--cyan);">✓</span> 7 skin lesion types
+              </div>
+              <div class="flex items-center gap-2">
+                <span style="color:var(--cyan);">✓</span> Real-time image upload & inference
+              </div>
+              <div class="flex items-center gap-2">
+                <span style="color:var(--cyan);">✓</span> Streamlit deployment
+              </div>
+              <div class="flex items-center gap-2">
+                <span style="color:var(--cyan);">✓</span> Medical-grade reporting
+              </div>
             </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- Footer -->
-    <footer id="contact" class="py-10 border-t border-gray-800 text-center">
-        <p class="text-gray-500 mb-4">Connect with me</p>
-        <div class="flex justify-center gap-6 text-2xl mb-6">
-            <a href="#" class="hover:text-blue-400"><i class="fab fa-github"></i></a>
-            <a href="#" class="hover:text-blue-400"><i class="fab fa-linkedin"></i></a>
-            <a href="#" class="hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+    <!-- Other projects grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="proj-card reveal">
+        <div style="font-size:2rem;margin-bottom:.6rem;">🧬</div>
+        <h4 style="font-weight:800;font-size:1.1rem;color:var(--text-primary);margin-bottom:.5rem;">
+          Bioinformatics Sequence Analyser
+        </h4>
+        <p style="color:var(--text-secondary);font-size:.88rem;line-height:1.75;margin-bottom:.9rem;">
+          Python toolkit for DNA/RNA analysis, GC-content calculation, ORF detection,
+          and BLAST integration for computational biology workflows.
+        </p>
+        <div>
+          <span class="badge">Python</span>
+          <span class="badge">BioPython</span>
+          <span class="badge">BLAST</span>
+          <span class="badge">Genomics</span>
         </div>
-        <p class="text-sm">&copy; 2026 Rehan Shafique. All rights reserved.</p>
-    </footer>
+        <div class="mt-4">
+          <span style="font-size:.75rem;color:var(--text-muted);
+                font-family:'Space Mono',monospace;">🔧 In Development</span>
+        </div>
+      </div>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        AOS.init({ duration: 1000, once: true });
-    </script>
+      <div class="proj-card reveal">
+        <div style="font-size:2rem;margin-bottom:.6rem;">🔬</div>
+        <h4 style="font-weight:800;font-size:1.1rem;color:var(--text-primary);margin-bottom:.5rem;">
+          Protein Structure Prediction
+        </h4>
+        <p style="color:var(--text-secondary);font-size:.88rem;line-height:1.75;margin-bottom:.9rem;">
+          LSTM-based ML pipeline predicting secondary protein structures from sequences,
+          benchmarked against PSIPRED on CASP targets.
+        </p>
+        <div>
+          <span class="badge">LSTM</span>
+          <span class="badge">BioPython</span>
+          <span class="badge">Scikit-learn</span>
+        </div>
+        <div class="mt-4">
+          <span style="font-size:.75rem;color:var(--text-muted);
+                font-family:'Space Mono',monospace;">🔬 Research Phase</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div style="font-size:2rem;margin-bottom:.6rem;">📈</div>
+        <h4 style="font-weight:800;font-size:1.1rem;color:var(--text-primary);margin-bottom:.5rem;">
+          COVID-19 Data Dashboard
+        </h4>
+        <p style="color:var(--text-secondary);font-size:.88rem;line-height:1.75;margin-bottom:.9rem;">
+          Interactive global COVID-19 statistics dashboard built with Streamlit and Plotly,
+          pulling live data from the Our World in Data API.
+        </p>
+        <div>
+          <span class="badge">Streamlit</span>
+          <span class="badge">Plotly</span>
+          <span class="badge">Pandas</span>
+          <span class="badge">REST API</span>
+        </div>
+        <div class="mt-4">
+          <span style="font-size:.75rem;color:var(--cyan);
+                font-family:'Space Mono',monospace;">✅ Complete</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     S E R V I C E S
+═════════════════════════════════════════════════════════ -->
+<section id="services" class="section"
+         style="background:linear-gradient(180deg,transparent,rgba(10,22,40,.35),transparent);">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="section-label reveal">// WHAT I OFFER</div>
+    <h2 class="section-title grad reveal">Services</h2>
+    <p class="section-sub mb-14 reveal">From concept to deployment — I build intelligent solutions end-to-end.</p>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <div class="glass service-card reveal">
+        <div class="service-icon"><i class="fas fa-brain" style="color:var(--cyan);"></i></div>
+        <h4 class="font-bold text-base mb-2" style="color:var(--text-primary);">AI Model Development</h4>
+        <p style="color:var(--text-muted);font-size:.83rem;line-height:1.75;">
+          Custom CNN, LSTM, and transformer models trained and optimised for your specific domain and dataset.
+        </p>
+      </div>
+
+      <div class="glass service-card reveal">
+        <div class="service-icon"><i class="fas fa-chart-line" style="color:var(--blue);"></i></div>
+        <h4 class="font-bold text-base mb-2" style="color:var(--text-primary);">Data Analysis</h4>
+        <p style="color:var(--text-muted);font-size:.83rem;line-height:1.75;">
+          End-to-end data pipelines — cleaning, EDA, visualisation, and statistical modelling with Python.
+        </p>
+      </div>
+
+      <div class="glass service-card reveal">
+        <div class="service-icon"><i class="fas fa-dna" style="color:var(--pink);"></i></div>
+        <h4 class="font-bold text-base mb-2" style="color:var(--text-primary);">Research Assistance</h4>
+        <p style="color:var(--text-muted);font-size:.83rem;line-height:1.75;">
+          Bioinformatics analysis, literature review support, and reproducible computational workflows.
+        </p>
+      </div>
+
+      <div class="glass service-card reveal">
+        <div class="service-icon"><i class="fas fa-globe" style="color:var(--cyan);"></i></div>
+        <h4 class="font-bold text-base mb-2" style="color:var(--text-primary);">Web Applications</h4>
+        <p style="color:var(--text-muted);font-size:.83rem;line-height:1.75;">
+          Rapid deployment of AI-powered web apps using Streamlit, with clean UI and production-ready code.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     C O N T A C T
+═════════════════════════════════════════════════════════ -->
+<section id="contact" class="section">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="section-label reveal">// GET IN TOUCH</div>
+    <h2 class="section-title grad reveal">Contact Me</h2>
+    <p class="section-sub mb-14 reveal">Open to research collaborations, freelance projects, and full-time opportunities.</p>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <!-- Form -->
+      <div class="md:col-span-2 reveal">
+        <div class="glass p-8">
+          <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
+            <div class="grid sm:grid-cols-2 gap-5 mb-5">
+              <div>
+                <label class="block text-sm font-bold mb-2"
+                       style="color:var(--text-secondary);">Your Name</label>
+                <input type="text" name="name" placeholder="Ali Hassan"
+                       class="form-input" required />
+              </div>
+              <div>
+                <label class="block text-sm font-bold mb-2"
+                       style="color:var(--text-secondary);">Email</label>
+                <input type="email" name="email" placeholder="you@example.com"
+                       class="form-input" required />
+              </div>
+            </div>
+            <div class="mb-5">
+              <label class="block text-sm font-bold mb-2"
+                     style="color:var(--text-secondary);">Subject</label>
+              <input type="text" name="subject"
+                     placeholder="Collaboration / Research / Freelance …"
+                     class="form-input" />
+            </div>
+            <div class="mb-6">
+              <label class="block text-sm font-bold mb-2"
+                     style="color:var(--text-secondary);">Message</label>
+              <textarea name="message" rows="5"
+                        placeholder="Tell me about your project or idea …"
+                        class="form-input" required style="resize:vertical;"></textarea>
+            </div>
+            <button type="submit" class="btn-primary w-full justify-center">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+            <div id="form-status" class="mt-4 text-center text-sm font-medium hidden"></div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="reveal">
+        <div class="glass p-7 h-full">
+          <h3 class="font-bold text-base mb-6" style="color:var(--text-primary);">📌 Direct Contact</h3>
+          <div class="space-y-5">
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                   style="background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.25);">
+                <i class="fas fa-envelope text-sm" style="color:var(--cyan);"></i>
+              </div>
+              <div>
+                <div class="font-bold text-sm" style="color:var(--text-primary);">Email</div>
+                <a href="mailto:rehanshafiq6540@gmail.com"
+                   style="color:var(--text-muted);font-size:.8rem;font-family:'Space Mono',monospace;
+                   word-break:break-all;">rehanshafiq6540@gmail.com</a>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                   style="background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.25);">
+                <i class="fas fa-university text-sm" style="color:var(--blue);"></i>
+              </div>
+              <div>
+                <div class="font-bold text-sm" style="color:var(--text-primary);">University</div>
+                <div style="color:var(--text-muted);font-size:.82rem;">University of Agriculture Faisalabad, Pakistan</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                   style="background:rgba(244,114,182,.12);border:1px solid rgba(244,114,182,.25);">
+                <i class="fas fa-map-marker-alt text-sm" style="color:var(--pink);"></i>
+              </div>
+              <div>
+                <div class="font-bold text-sm" style="color:var(--text-primary);">Location</div>
+                <div style="color:var(--text-muted);font-size:.82rem;">Faisalabad, Punjab, Pakistan 🇵🇰</div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-6" style="border-color:var(--border);" />
+          <a href="https://skincancerpredictions.streamlit.app/"
+             target="_blank" rel="noopener"
+             class="btn-primary w-full justify-center">
+            <i class="fas fa-external-link-alt"></i> 👉 Live Demo
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     F O O T E R
+═════════════════════════════════════════════════════════ -->
+<footer class="relative z-10 py-10"
+        style="border-top:1px solid var(--border);
+               background:rgba(5,15,34,.7);backdrop-filter:blur(10px);">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center text-base"
+           style="background:linear-gradient(135deg,var(--cyan),var(--blue));">🧬</div>
+      <div>
+        <div class="font-bold text-sm" style="color:var(--text-primary);">Rehan Shafique</div>
+        <div style="color:var(--text-muted);font-size:.75rem;">University of Agriculture Faisalabad</div>
+      </div>
+    </div>
+    <div style="color:var(--text-muted);font-size:.82rem;text-align:center;">
+      © 2026 Rehan Shafique · Built with 🧬 AI & Passion
+    </div>
+    <div class="flex gap-3">
+      <a href="mailto:rehanshafiq6540@gmail.com"
+         class="w-9 h-9 rounded-lg flex items-center justify-center"
+         style="background:rgba(30,58,95,.5);border:1px solid var(--border);
+                color:var(--text-secondary);transition:all .2s;"
+         onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--cyan)';"
+         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)';">
+        <i class="fas fa-envelope text-sm"></i>
+      </a>
+      <a href="https://github.com/" target="_blank" rel="noopener"
+         class="w-9 h-9 rounded-lg flex items-center justify-center"
+         style="background:rgba(30,58,95,.5);border:1px solid var(--border);
+                color:var(--text-secondary);transition:all .2s;"
+         onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--cyan)';"
+         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)';">
+        <i class="fab fa-github text-sm"></i>
+      </a>
+      <a href="https://linkedin.com/" target="_blank" rel="noopener"
+         class="w-9 h-9 rounded-lg flex items-center justify-center"
+         style="background:rgba(30,58,95,.5);border:1px solid var(--border);
+                color:var(--text-secondary);transition:all .2s;"
+         onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)';"
+         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)';">
+        <i class="fab fa-linkedin text-sm"></i>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── Back-to-top ────────────────────────────────────── -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+        aria-label="Back to top">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- ════════════════════════════════════════════════════════
+     J A V A S C R I P T
+═════════════════════════════════════════════════════════ -->
+<script>
+/* ─── Typing animation ────────────────────────────────── */
+(function(){
+  const lines  = ["Hi, I'm Rehan Shafique", "AI Developer &", "Bioinformatics Student"];
+  const target = document.getElementById('typing-target');
+  let lineIdx  = 0, charIdx = 0, deleting = false;
+
+  function tick(){
+    const current = lines[lineIdx];
+    if(!deleting){
+      target.textContent = current.slice(0, ++charIdx);
+      if(charIdx === current.length){
+        if(lineIdx === lines.length - 1){
+          // Final line reached — stop
+          // Apply gradient after final text settles
+          target.style.background =
+            'linear-gradient(135deg,var(--cyan) 0%,var(--blue) 50%,var(--pink) 100%)';
+          target.style.webkitBackgroundClip = 'text';
+          target.style.webkitTextFillColor  = 'transparent';
+          target.style.backgroundClip       = 'text';
+          return;
+        }
+        setTimeout(()=>{ deleting=true; tick(); }, 1100);
+        return;
+      }
+    } else {
+      target.textContent = current.slice(0, --charIdx);
+      if(charIdx === 0){
+        deleting = false;
+        lineIdx  = (lineIdx + 1) % lines.length;
+        setTimeout(tick, 350);
+        return;
+      }
+    }
+    setTimeout(tick, deleting ? 40 : 65);
+  }
+  setTimeout(tick, 600);
+})();
+
+/* ─── Navbar scroll effect ────────────────────────────── */
+window.addEventListener('scroll', function(){
+  document.getElementById('navbar')
+    .classList.toggle('scrolled', window.scrollY > 50);
+  document.getElementById('back-top')
+    .classList.toggle('show', window.scrollY > 400);
+});
+
+/* ─── Scroll reveal ───────────────────────────────────── */
+const revealObs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ─── Skill bars ──────────────────────────────────────── */
+const skills = [
+  { label:'Python',                   pct:95 },
+  { label:'Machine Learning',         pct:88 },
+  { label:'Deep Learning / TensorFlow',pct:85 },
+  { label:'Data Science & Viz',       pct:82 },
+  { label:'Bioinformatics',           pct:78 },
+  { label:'Streamlit Deployment',     pct:90 },
+  { label:'Research & Writing',       pct:80 },
+];
+const barContainer = document.getElementById('skill-bars');
+skills.forEach(s=>{
+  const div = document.createElement('div');
+  div.innerHTML=`
+    <div style="display:flex;justify-content:space-between;
+         font-size:.78rem;color:var(--text-muted);
+         font-family:'Space Mono',monospace;margin-bottom:.3rem;">
+      <span>${s.label}</span><span>${s.pct}%</span>
+    </div>
+    <div class="skill-track">
+      <div class="skill-fill" data-pct="${s.pct}"></div>
+    </div>`;
+  barContainer.appendChild(div);
+});
+
+// Animate bars on scroll
+const barObs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.skill-fill').forEach(bar=>{
+        bar.style.width = bar.dataset.pct + '%';
+      });
+      barObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+barObs.observe(barContainer);
+
+/* ─── Badge cloud ─────────────────────────────────────── */
+const badges = [
+  'Python','Machine Learning','Deep Learning','TensorFlow','Keras',
+  'Scikit-learn','Pandas','NumPy','Matplotlib','Streamlit','OpenCV',
+  'Bioinformatics','Data Science','CNN','NLP','Transfer Learning',
+  'Git','Linux','SQL','REST API',
+];
+const cloud = document.getElementById('badge-cloud');
+badges.forEach(b=>{
+  const span = document.createElement('span');
+  span.className = 'badge';
+  span.textContent = b;
+  cloud.appendChild(span);
+});
+
+/* ─── Theme toggle ────────────────────────────────────── */
+const themeBtn = document.getElementById('theme-btn');
+themeBtn.addEventListener('click', ()=>{
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  themeBtn.textContent = isDark ? '🌙' : '☀️';
+});
+
+/* ─── Mobile menu ─────────────────────────────────────── */
+document.getElementById('hamburger').addEventListener('click', ()=>{
+  document.getElementById('mobile-menu').classList.add('open');
+});
+document.getElementById('close-menu').addEventListener('click', closeMobileMenu);
+function closeMobileMenu(){
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+
+/* ─── Contact form ────────────────────────────────────── */
+function handleSubmit(e){
+  e.preventDefault();
+  const form   = e.target;
+  const name   = form.name.value.trim();
+  const email  = form.email.value.trim();
+  const msg    = form.message.value.trim();
+  const status = document.getElementById('form-status');
+
+  if(!name || !email || !msg){
+    status.textContent = '⚠️ Please fill in all required fields.';
+    status.style.color = '#f59e0b';
+    status.classList.remove('hidden');
+    return;
+  }
+
+  // Simulate send
+  status.textContent = '✅ Message sent! I'll get back to you soon.';
+  status.style.color = 'var(--cyan)';
+  status.classList.remove('hidden');
+  form.reset();
+  setTimeout(()=> status.classList.add('hidden'), 5000);
+}
+
+/* ─── Smooth anchor scroll (fallback for older browsers) ── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', function(e){
+    const target = document.querySelector(this.getAttribute('href'));
+    if(target){
+      e.preventDefault();
+      target.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+  });
+});
+</script>
+
 </body>
 </html>
