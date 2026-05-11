@@ -1,1131 +1,559 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description"
-        content="Rehan Shafique — AI Developer, Machine Learning Engineer & Bioinformatics Student at UAF Pakistan. Portfolio showcasing AI projects, skills, and research." />
-  <meta name="keywords"
-        content="Rehan Shafique, AI Developer, Machine Learning, Bioinformatics, Pakistan, UAF, Skin Cancer Prediction" />
-  <meta property="og:title" content="Rehan Shafique | AI Developer Portfolio" />
-  <meta property="og:description" content="AI Developer · ML Engineer · Bioinformatics Researcher" />
-  <title>Rehan Shafique | AI Developer & Bioinformatics Student</title>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Clash+Display:wght@400;600;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-  <script>
-    tailwind.config = {
-      darkMode: ['attribute', '[data-theme="dark"]'],
-      theme: {
-        extend: {
-          fontFamily: {
-            display: ['Syne', 'sans-serif'],
-            mono: ['"Space Mono"', 'monospace'],
-          },
-          colors: {
-            brand: { cyan:'#22d3ee', blue:'#6366f1', pink:'#f472b6' },
-            dark:  { 900:'#020b18', 800:'#050f22', 700:'#0a1628', 600:'#0f1f3d', 500:'#1e3a5f' },
-          },
-          animation: {
-            'float': 'float 6s ease-in-out infinite',
-            'pulse-slow': 'pulse 4s ease-in-out infinite',
-            'slide-up': 'slideUp .7s ease both',
-            'fade-in':  'fadeIn .9s ease both',
-          },
-          keyframes: {
-            float:   { '0%,100%':{ transform:'translateY(0)' }, '50%':{ transform:'translateY(-12px)' } },
-            slideUp: { from:{ opacity:0, transform:'translateY(40px)' }, to:{ opacity:1, transform:'translateY(0)' } },
-            fadeIn:  { from:{ opacity:0 }, to:{ opacity:1 } },
-          },
-        },
-      },
-    };
-  </script>
-
-  <style>
-    /* ─── CSS Variables ─────────────────────────────────── */
-    :root{
-      --bg-900:#020b18; --bg-800:#050f22; --bg-700:#0a1628;
-      --bg-600:#0f1f3d; --border:#1e3a5f;
-      --cyan:#22d3ee;   --blue:#6366f1;   --pink:#f472b6;
-      --text-primary:#f8fafc; --text-secondary:#94a3b8; --text-muted:#475569;
-    }
-    [data-theme="light"]{
-      --bg-900:#f0f4ff; --bg-800:#e8effd; --bg-700:#dce7fb;
-      --bg-600:#cfdaf8; --border:#b6c9f0;
-      --text-primary:#0f172a; --text-secondary:#334155; --text-muted:#64748b;
-    }
-
-    /* ─── Base ──────────────────────────────────────────── */
-    *{ box-sizing:border-box; margin:0; padding:0; }
-    html{ scroll-behavior:smooth; }
-    body{
-      background:var(--bg-900);
-      color:var(--text-primary);
-      font-family:'Syne',sans-serif;
-      overflow-x:hidden;
-      transition:background .4s,color .4s;
-    }
-
-    /* ─── Scrollbar ─────────────────────────────────────── */
-    ::-webkit-scrollbar{ width:5px; }
-    ::-webkit-scrollbar-track{ background:var(--bg-800); }
-    ::-webkit-scrollbar-thumb{ background:linear-gradient(var(--cyan),var(--blue)); border-radius:99px; }
-
-    /* ─── Selection ─────────────────────────────────────── */
-    ::selection{ background:rgba(34,211,238,.25); color:var(--text-primary); }
-
-    /* ─── Noise overlay ─────────────────────────────────── */
-    body::before{
-      content:'';
-      position:fixed; inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events:none; z-index:0; opacity:.5;
-    }
-
-    /* ─── Animated grid background ──────────────────────── */
-    .grid-bg{
-      position:fixed; inset:0; z-index:0; pointer-events:none;
-      background-image:
-        linear-gradient(rgba(34,211,238,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(34,211,238,.03) 1px, transparent 1px);
-      background-size:60px 60px;
-    }
-
-    /* ─── Glow orbs ─────────────────────────────────────── */
-    .orb{
-      position:fixed; border-radius:50%;
-      filter:blur(100px); pointer-events:none; z-index:0;
-    }
-    .orb-1{
-      width:520px;height:520px;
-      background:radial-gradient(circle, rgba(99,102,241,.18), transparent 70%);
-      top:-120px; left:-120px;
-      animation:float 8s ease-in-out infinite;
-    }
-    .orb-2{
-      width:420px;height:420px;
-      background:radial-gradient(circle, rgba(34,211,238,.12), transparent 70%);
-      bottom:-80px; right:-80px;
-      animation:float 10s ease-in-out 2s infinite reverse;
-    }
-    .orb-3{
-      width:300px;height:300px;
-      background:radial-gradient(circle, rgba(244,114,182,.1), transparent 70%);
-      top:50%; left:50%; transform:translate(-50%,-50%);
-      animation:float 12s ease-in-out 4s infinite;
-    }
-
-    /* ─── Navbar ─────────────────────────────────────────── */
-    #navbar{
-      position:fixed; top:0; left:0; right:0; z-index:1000;
-      transition:all .4s;
-    }
-    #navbar.scrolled{
-      background:rgba(5,15,34,.85);
-      backdrop-filter:blur(20px);
-      border-bottom:1px solid var(--border);
-      box-shadow:0 4px 30px rgba(0,0,0,.4);
-    }
-    .nav-link{
-      position:relative; font-size:.85rem; font-weight:600;
-      color:var(--text-secondary); transition:color .2s;
-      font-family:'Space Mono',monospace;
-    }
-    .nav-link::after{
-      content:''; position:absolute; bottom:-4px; left:0; right:0;
-      height:1px; background:linear-gradient(90deg,var(--cyan),var(--blue));
-      transform:scaleX(0); transition:transform .3s;
-    }
-    .nav-link:hover{ color:var(--cyan); }
-    .nav-link:hover::after{ transform:scaleX(1); }
-
-    /* ─── Gradient text ─────────────────────────────────── */
-    .grad{
-      background:linear-gradient(135deg,var(--cyan) 0%,var(--blue) 50%,var(--pink) 100%);
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-      background-clip:text;
-    }
-
-    /* ─── Typing cursor ─────────────────────────────────── */
-    .cursor{
-      display:inline-block; width:3px; height:1.1em;
-      background:var(--cyan); border-radius:2px;
-      animation:blink 1s step-end infinite;
-      vertical-align:sub; margin-left:3px;
-    }
-    @keyframes blink{ 0%,100%{ opacity:1 } 50%{ opacity:0 } }
-
-    /* ─── Glass card ─────────────────────────────────────── */
-    .glass{
-      background:rgba(10,22,40,.6);
-      border:1px solid rgba(30,58,95,.6);
-      border-radius:20px;
-      backdrop-filter:blur(16px);
-      transition:border-color .3s, transform .3s, box-shadow .3s;
-    }
-    .glass:hover{
-      border-color:rgba(34,211,238,.35);
-      transform:translateY(-4px);
-      box-shadow:0 12px 40px rgba(34,211,238,.08);
-    }
-    [data-theme="light"] .glass{
-      background:rgba(255,255,255,.7);
-      border-color:rgba(182,201,240,.7);
-    }
-
-    /* ─── Buttons ────────────────────────────────────────── */
-    .btn-primary{
-      display:inline-flex; align-items:center; gap:.45rem;
-      background:linear-gradient(135deg,var(--cyan),var(--blue));
-      color:#fff; font-weight:700; font-size:.9rem;
-      padding:.7rem 1.8rem; border-radius:10px;
-      border:none; cursor:pointer; transition:opacity .2s, transform .2s;
-      text-decoration:none; font-family:'Syne',sans-serif;
-    }
-    .btn-primary:hover{ opacity:.85; transform:translateY(-2px); }
-
-    .btn-outline{
-      display:inline-flex; align-items:center; gap:.45rem;
-      background:transparent;
-      color:var(--cyan);
-      border:1px solid var(--cyan);
-      font-weight:700; font-size:.9rem;
-      padding:.65rem 1.75rem; border-radius:10px;
-      cursor:pointer; transition:all .2s;
-      text-decoration:none; font-family:'Syne',sans-serif;
-    }
-    .btn-outline:hover{
-      background:rgba(34,211,238,.1);
-      transform:translateY(-2px);
-    }
-
-    /* ─── Section ────────────────────────────────────────── */
-    .section{ position:relative; z-index:1; padding:6rem 0; }
-    .section-label{
-      font-family:'Space Mono',monospace;
-      font-size:.78rem; letter-spacing:.14em;
-      color:var(--cyan); margin-bottom:.6rem;
-    }
-    .section-title{
-      font-size:2.6rem; font-weight:800;
-      line-height:1.1; margin-bottom:.5rem;
-    }
-    .section-sub{
-      color:var(--text-secondary); font-size:1.05rem; max-width:560px;
-    }
-
-    /* ─── Skill bar ──────────────────────────────────────── */
-    .skill-track{
-      background:rgba(30,58,95,.4); border-radius:999px;
-      height:6px; overflow:hidden; margin-top:.3rem;
-    }
-    .skill-fill{
-      height:100%; border-radius:999px;
-      background:linear-gradient(90deg,var(--cyan),var(--blue));
-      width:0; transition:width 1.4s cubic-bezier(.4,0,.2,1);
-    }
-
-    /* ─── Skill badge ────────────────────────────────────── */
-    .badge{
-      display:inline-block;
-      background:rgba(34,211,238,.1);
-      border:1px solid rgba(34,211,238,.25);
-      color:var(--cyan);
-      border-radius:999px;
-      padding:.28rem .85rem;
-      font-size:.75rem; font-family:'Space Mono',monospace;
-      font-weight:700; margin:.22rem;
-      transition:background .2s, transform .2s;
-    }
-    .badge:hover{
-      background:rgba(34,211,238,.2);
-      transform:scale(1.05);
-    }
-
-    /* ─── Project card ───────────────────────────────────── */
-    .proj-card{
-      position:relative; overflow:hidden;
-      background:rgba(10,22,40,.7);
-      border:1px solid rgba(30,58,95,.6);
-      border-radius:22px; padding:2rem;
-      transition:all .35s;
-    }
-    .proj-card::before{
-      content:''; position:absolute;
-      inset:0; border-radius:22px;
-      background:linear-gradient(135deg,rgba(34,211,238,.05),transparent 60%);
-      opacity:0; transition:opacity .35s;
-    }
-    .proj-card:hover{ border-color:rgba(34,211,238,.4); transform:translateY(-6px); }
-    .proj-card:hover::before{ opacity:1; }
-
-    /* ─── Service card ───────────────────────────────────── */
-    .service-card{
-      text-align:center; padding:2.2rem 1.6rem;
-    }
-    .service-icon{
-      width:60px; height:60px; border-radius:16px;
-      background:linear-gradient(135deg,rgba(34,211,238,.15),rgba(99,102,241,.15));
-      border:1px solid rgba(34,211,238,.25);
-      display:flex; align-items:center; justify-content:center;
-      font-size:1.5rem; margin:0 auto 1.1rem;
-      transition:transform .3s;
-    }
-    .service-card:hover .service-icon{ transform:scale(1.12) rotate(-5deg); }
-
-    /* ─── Timeline (About) ───────────────────────────────── */
-    .timeline-item::before{
-      content:''; position:absolute; left:-21px; top:6px;
-      width:10px; height:10px; border-radius:50%;
-      background:linear-gradient(135deg,var(--cyan),var(--blue));
-      box-shadow:0 0 8px rgba(34,211,238,.6);
-    }
-
-    /* ─── Contact form ───────────────────────────────────── */
-    .form-input{
-      width:100%; padding:.75rem 1.1rem;
-      background:rgba(10,22,40,.8);
-      border:1px solid var(--border);
-      border-radius:10px; color:var(--text-primary);
-      font-family:'Syne',sans-serif; font-size:.92rem;
-      transition:border-color .25s, box-shadow .25s;
-      outline:none;
-    }
-    .form-input:focus{
-      border-color:var(--cyan);
-      box-shadow:0 0 0 3px rgba(34,211,238,.12);
-    }
-    [data-theme="light"] .form-input{
-      background:rgba(255,255,255,.9);
-      border-color:var(--border);
-    }
-
-    /* ─── Back to top ────────────────────────────────────── */
-    #back-top{
-      position:fixed; bottom:2rem; right:2rem;
-      width:46px; height:46px; border-radius:12px; z-index:900;
-      background:linear-gradient(135deg,var(--cyan),var(--blue));
-      display:flex; align-items:center; justify-content:center;
-      color:#fff; font-size:1.1rem; cursor:pointer;
-      opacity:0; transform:translateY(20px);
-      transition:opacity .3s, transform .3s;
-      border:none; box-shadow:0 6px 20px rgba(34,211,238,.3);
-    }
-    #back-top.show{ opacity:1; transform:translateY(0); }
-    #back-top:hover{ opacity:.85; }
-
-    /* ─── Theme toggle ───────────────────────────────────── */
-    #theme-btn{
-      width:40px; height:40px; border-radius:10px;
-      background:rgba(30,58,95,.4); border:1px solid var(--border);
-      color:var(--text-secondary); font-size:1rem;
-      cursor:pointer; transition:all .2s;
-      display:flex; align-items:center; justify-content:center;
-    }
-    #theme-btn:hover{ border-color:var(--cyan); color:var(--cyan); }
-
-    /* ─── Mobile menu ────────────────────────────────────── */
-    #mobile-menu{
-      display:none;
-      position:fixed; top:0; left:0; right:0; bottom:0;
-      background:rgba(2,11,24,.97); z-index:999;
-      flex-direction:column; align-items:center; justify-content:center; gap:2.4rem;
-    }
-    #mobile-menu.open{ display:flex; }
-
-    /* ─── Scroll reveal ──────────────────────────────────── */
-    .reveal{
-      opacity:0; transform:translateY(30px);
-      transition:opacity .7s ease, transform .7s ease;
-    }
-    .reveal.visible{
-      opacity:1; transform:translateY(0);
-    }
-
-    /* ─── Hero section ───────────────────────────────────── */
-    #hero{
-      min-height:100vh; display:flex; align-items:center;
-      padding-top:6rem;
-    }
-
-    /* ─── Responsive ─────────────────────────────────────── */
-    @media(max-width:768px){
-      .section-title{ font-size:2rem; }
-      #hero h1 { font-size:2.4rem !important; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rehan Shafique | AI Developer & ML Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- ─── Decorative background ─────────────────────────── -->
-<div class="grid-bg"></div>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
+<!-- CANVAS for Three.js Brain -->
+<canvas id="brain-canvas"></canvas>
 
-<!-- ════════════════════════════════════════════════════════
-     N A V B A R
-═════════════════════════════════════════════════════════ -->
-<nav id="navbar" class="w-full py-4">
-  <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
-    <!-- Logo -->
-    <a href="#hero" class="flex items-center gap-2.5">
-      <div class="w-9 h-9 rounded-xl flex items-center justify-center text-lg"
-           style="background:linear-gradient(135deg,var(--cyan),var(--blue));">🧬</div>
-      <span class="font-display font-bold text-base" style="color:var(--text-primary);">
-        Rehan<span class="grad">.</span>
-      </span>
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <span class="logo-bracket">[</span>
+      <span class="logo-name">RS</span>
+      <span class="logo-bracket">]</span>
+      <span class="logo-dot blink"></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#hero" class="nav-link">Home</a></li>
+      <li><a href="#skills" class="nav-link">Skills</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#timeline" class="nav-link">Journey</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <a href="resume.html" target="_blank" class="btn-resume">
+      <span>View Resume</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
-
-    <!-- Desktop links -->
-    <div class="hidden md:flex items-center gap-8">
-      <a href="#about"    class="nav-link">About</a>
-      <a href="#skills"   class="nav-link">Skills</a>
-      <a href="#projects" class="nav-link">Projects</a>
-      <a href="#services" class="nav-link">Services</a>
-      <a href="#contact"  class="nav-link">Contact</a>
-    </div>
-
-    <!-- Right controls -->
-    <div class="flex items-center gap-3">
-      <button id="theme-btn" aria-label="Toggle theme">🌙</button>
-      <!-- Mobile hamburger -->
-      <button id="hamburger" class="md:hidden flex flex-col gap-1.5 p-2"
-              style="color:var(--text-secondary);">
-        <span class="block w-6 h-0.5 bg-current rounded transition-all"></span>
-        <span class="block w-6 h-0.5 bg-current rounded transition-all"></span>
-        <span class="block w-6 h-0.5 bg-current rounded transition-all"></span>
-      </button>
-    </div>
   </div>
 </nav>
 
-<!-- Mobile menu overlay -->
-<div id="mobile-menu">
-  <button id="close-menu" class="absolute top-6 right-6 text-3xl"
-          style="color:var(--text-secondary);">✕</button>
-  <a href="#about"    class="text-2xl font-bold"  style="color:var(--text-primary);" onclick="closeMobileMenu()">About</a>
-  <a href="#skills"   class="text-2xl font-bold"  style="color:var(--text-primary);" onclick="closeMobileMenu()">Skills</a>
-  <a href="#projects" class="text-2xl font-bold"  style="color:var(--text-primary);" onclick="closeMobileMenu()">Projects</a>
-  <a href="#services" class="text-2xl font-bold"  style="color:var(--text-primary);" onclick="closeMobileMenu()">Services</a>
-  <a href="#contact"  class="text-2xl font-bold"  style="color:var(--text-primary);" onclick="closeMobileMenu()">Contact</a>
-</div>
-
-<!-- ════════════════════════════════════════════════════════
-     H E R O
-═════════════════════════════════════════════════════════ -->
-<section id="hero" class="relative z-10">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="max-w-3xl">
-
-      <div class="section-label mb-4">// WELCOME TO MY PORTFOLIO</div>
-
-      <!-- Typing heading -->
-      <h1 id="hero-heading"
-          style="font-size:3.8rem;font-weight:800;line-height:1.1;margin-bottom:.8rem;">
-        <span id="typing-target"></span><span class="cursor"></span>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <!-- LEFT -->
+    <div class="hero-left">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>Available for Research Roles</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="line-1">Building</span>
+        <span class="line-2 gradient-text" id="typed-text"></span>
+        <span class="line-3">AI Systems</span>
       </h1>
-
-      <p class="text-xl font-semibold mb-2" style="color:var(--cyan);">
-        AI Developer &nbsp;·&nbsp; Machine Learning Engineer &nbsp;·&nbsp; Bioinformatics Student
-      </p>
-      <p style="color:var(--text-secondary);font-size:1.05rem;line-height:1.8;max-width:580px;margin-bottom:2.4rem;">
-        Building intelligent systems at the intersection of
-        <strong style="color:var(--cyan);">Artificial Intelligence</strong> and
-        <strong style="color:var(--blue);">Bioinformatics</strong> — turning biological data into
-        life-saving solutions.
-      </p>
-
-      <div class="flex flex-wrap gap-4 items-center">
+      <p class="hero-sub">for <span class="highlight">Healthcare</span> & <span class="highlight">Bioinformatics</span></p>
+      <p class="hero-desc">AI Developer · ML Engineer · Bioinformatics Student<br>
+      <span class="uni-tag">University of Agriculture Faisalabad, Pakistan</span></p>
+      <div class="hero-cta">
         <a href="#projects" class="btn-primary">
-          <i class="fas fa-rocket"></i> View Projects
+          <span>Explore Projects</span>
+          <div class="btn-glow"></div>
         </a>
-        <a href="#contact" class="btn-outline">
-          <i class="fas fa-paper-plane"></i> Contact Me
-        </a>
-        <a href="mailto:rehanshafiq6540@gmail.com" class="btn-outline"
-           download style="border-color:var(--blue);color:var(--blue);">
-          <i class="fas fa-download"></i> Download CV
-        </a>
+        <a href="#contact" class="btn-ghost">Get in Touch</a>
       </div>
-
-      <!-- Quick stats row -->
-      <div class="flex flex-wrap gap-5 mt-14">
-        <div class="glass px-5 py-3 flex items-center gap-3">
-          <span style="font-size:1.5rem;">🧠</span>
-          <div>
-            <div class="font-bold" style="color:var(--text-primary);">Expert</div>
-            <div style="font-size:.74rem;color:var(--text-muted);">AI / ML</div>
-          </div>
-        </div>
-        <div class="glass px-5 py-3 flex items-center gap-3">
-          <span style="font-size:1.5rem;">🧬</span>
-          <div>
-            <div class="font-bold" style="color:var(--text-primary);">Researcher</div>
-            <div style="font-size:.74rem;color:var(--text-muted);">Bioinformatics</div>
-          </div>
-        </div>
-        <div class="glass px-5 py-3 flex items-center gap-3">
-          <span style="font-size:1.5rem;">🚀</span>
-          <div>
-            <div class="font-bold" style="color:var(--text-primary);">5+ Projects</div>
-            <div style="font-size:.74rem;color:var(--text-muted);">Deployed</div>
-          </div>
-        </div>
-        <div class="glass px-5 py-3 flex items-center gap-3">
-          <span style="font-size:1.5rem;">🎓</span>
-          <div>
-            <div class="font-bold" style="color:var(--text-primary);">UAF</div>
-            <div style="font-size:.74rem;color:var(--text-muted);">Pakistan</div>
-          </div>
-        </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">5+</span><span class="stat-label">AI Projects</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">3+</span><span class="stat-label">Years Coding</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">Healthcare</span><span class="stat-label">AI Focus</span></div>
       </div>
-
     </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════
-     A B O U T
-═════════════════════════════════════════════════════════ -->
-<section id="about" class="section">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="section-label reveal">// ABOUT ME</div>
-    <h2 class="section-title grad reveal">Who Am I?</h2>
-    <p class="section-sub mb-14 reveal">A passionate problem-solver at the crossroads of AI and life science.</p>
-
-    <div class="grid md:grid-cols-2 gap-10 items-start">
-
-      <!-- Bio -->
-      <div class="reveal">
-        <div class="glass p-8 h-full">
-          <p style="color:var(--text-secondary);line-height:1.9;font-size:.98rem;margin-bottom:1.1rem;">
-            I'm <strong style="color:var(--cyan);">Rehan Shafique</strong>, an AI Developer and
-            Bioinformatics student at the
-            <strong style="color:var(--blue);">University of Agriculture Faisalabad (UAF), Pakistan</strong>.
-            I specialise in building end-to-end machine learning pipelines and deploying intelligent
-            web applications that solve real-world healthcare and research challenges.
-          </p>
-          <p style="color:var(--text-secondary);line-height:1.9;font-size:.98rem;margin-bottom:1.1rem;">
-            My academic foundation in <strong style="color:var(--cyan);">Bioinformatics</strong>
-            gives me a unique lens through which I apply Deep Learning to genomics, proteomics, and
-            medical imaging. My flagship project — a
-            <em>Skin Cancer Prediction System</em> — exemplifies my commitment to AI for social good.
-          </p>
-          <p style="color:var(--text-muted);line-height:1.9;font-size:.92rem;">
-            Beyond coding, I contribute to open-source, write technical articles, and mentor junior
-            developers. I believe the future of medicine will be written in Python.
-          </p>
+    <!-- RIGHT -->
+    <div class="hero-right">
+      <div class="avatar-container">
+        <div class="avatar-rings">
+          <div class="ring ring-1"></div>
+          <div class="ring ring-2"></div>
+          <div class="ring ring-3"></div>
         </div>
-      </div>
-
-      <!-- Timeline -->
-      <div class="reveal">
-        <div class="glass p-8 h-full">
-          <h3 class="font-bold text-lg mb-6" style="color:var(--text-primary);">
-            🗓️ Journey
-          </h3>
-          <div class="border-l-2 pl-6 space-y-8"
-               style="border-color:var(--border); position:relative;">
-            <div class="relative timeline-item">
-              <div class="text-sm font-bold" style="color:var(--cyan);">2022 — Present</div>
-              <div class="font-bold mt-0.5" style="color:var(--text-primary);">B.Sc. Bioinformatics</div>
-              <div style="color:var(--text-muted);font-size:.85rem;">University of Agriculture Faisalabad</div>
-            </div>
-            <div class="relative timeline-item">
-              <div class="text-sm font-bold" style="color:var(--cyan);">2023</div>
-              <div class="font-bold mt-0.5" style="color:var(--text-primary);">Machine Learning Deep-Dive</div>
-              <div style="color:var(--text-muted);font-size:.85rem;">Self-study — Coursera, Fast.ai, TensorFlow docs</div>
-            </div>
-            <div class="relative timeline-item">
-              <div class="text-sm font-bold" style="color:var(--cyan);">2024</div>
-              <div class="font-bold mt-0.5" style="color:var(--text-primary);">Skin Cancer Prediction System</div>
-              <div style="color:var(--text-muted);font-size:.85rem;">First deployed AI healthcare application</div>
-            </div>
-            <div class="relative timeline-item">
-              <div class="text-sm font-bold" style="color:var(--cyan);">2025 — Present</div>
-              <div class="font-bold mt-0.5" style="color:var(--text-primary);">AI Developer — Freelance & Research</div>
-              <div style="color:var(--text-muted);font-size:.85rem;">Multiple ML projects &amp; open-source contributions</div>
+        <div class="avatar-glow"></div>
+        <div class="avatar-frame">
+          <div class="avatar-placeholder">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="avatar-svg">
+              <defs>
+                <radialGradient id="avatarGrad" cx="50%" cy="40%" r="60%">
+                  <stop offset="0%" stop-color="#00f5ff" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#0a0f1e" stop-opacity="1"/>
+                </radialGradient>
+                <clipPath id="avatarClip">
+                  <circle cx="100" cy="100" r="98"/>
+                </clipPath>
+              </defs>
+              <circle cx="100" cy="100" r="98" fill="#0d1628"/>
+              <circle cx="100" cy="85" r="38" fill="#1a2a4a"/>
+              <ellipse cx="100" cy="160" rx="55" ry="40" fill="#1a2a4a"/>
+              <circle cx="100" cy="85" r="35" fill="#2a3f6f"/>
+              <!-- face details -->
+              <circle cx="87" cy="80" r="5" fill="#00f5ff" opacity="0.9"/>
+              <circle cx="113" cy="80" r="5" fill="#00f5ff" opacity="0.9"/>
+              <path d="M88 98 Q100 108 112 98" stroke="#00f5ff" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- circuit lines -->
+              <line x1="30" y1="100" x2="60" y2="100" stroke="#00f5ff" stroke-width="0.5" opacity="0.4"/>
+              <line x1="140" y1="100" x2="170" y2="100" stroke="#00f5ff" stroke-width="0.5" opacity="0.4"/>
+              <circle cx="30" cy="100" r="2" fill="#00f5ff" opacity="0.6"/>
+              <circle cx="170" cy="100" r="2" fill="#00f5ff" opacity="0.6"/>
+            </svg>
+            <div class="avatar-label">
+              <span class="avatar-name">Rehan Shafique</span>
+              <span class="avatar-role">AI Developer</span>
             </div>
           </div>
         </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════
-     S K I L L S
-═════════════════════════════════════════════════════════ -->
-<section id="skills" class="section"
-         style="background:linear-gradient(180deg,transparent,rgba(10,22,40,.4),transparent);">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="section-label reveal">// TECHNICAL SKILLS</div>
-    <h2 class="section-title grad reveal">What I Know</h2>
-    <p class="section-sub mb-14 reveal">A toolkit forged through research, projects, and relentless learning.</p>
-
-    <div class="grid md:grid-cols-2 gap-10">
-
-      <!-- Proficiency bars -->
-      <div class="reveal glass p-8">
-        <h3 class="font-bold text-lg mb-7" style="color:var(--text-primary);">📊 Proficiency</h3>
-        <div id="skill-bars" class="space-y-5">
-          <!-- injected by JS -->
-        </div>
-      </div>
-
-      <!-- Badge cloud -->
-      <div>
-        <div class="reveal glass p-8 mb-6">
-          <h3 class="font-bold text-lg mb-4" style="color:var(--text-primary);">⚡ Technologies</h3>
-          <div id="badge-cloud">
-            <!-- injected by JS -->
+        <div class="floating-badges">
+          <div class="float-badge fb-1">
+            <span>🧠 Deep Learning</span>
           </div>
-        </div>
-        <!-- Tool groups -->
-        <div class="grid grid-cols-3 gap-4 reveal">
-          <div class="glass p-4">
-            <div class="text-sm font-bold mb-3" style="color:var(--cyan);">🤖 AI / ML</div>
-            <ul class="space-y-1" style="color:var(--text-muted);font-size:.8rem;">
-              <li>TensorFlow</li><li>Keras</li><li>Scikit-learn</li><li>OpenCV</li><li>PyTorch</li>
-            </ul>
+          <div class="float-badge fb-2">
+            <span>🧬 Bioinformatics</span>
           </div>
-          <div class="glass p-4">
-            <div class="text-sm font-bold mb-3" style="color:var(--blue);">📊 Data</div>
-            <ul class="space-y-1" style="color:var(--text-muted);font-size:.8rem;">
-              <li>Pandas</li><li>NumPy</li><li>Matplotlib</li><li>Seaborn</li><li>Plotly</li>
-            </ul>
-          </div>
-          <div class="glass p-4">
-            <div class="text-sm font-bold mb-3" style="color:var(--pink);">🚀 Dev</div>
-            <ul class="space-y-1" style="color:var(--text-muted);font-size:.8rem;">
-              <li>Streamlit</li><li>Git/GitHub</li><li>Jupyter</li><li>VS Code</li><li>Linux</li>
-            </ul>
+          <div class="float-badge fb-3">
+            <span>⚕️ Healthcare AI</span>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator">
+    <span>Scroll to explore</span>
+    <div class="scroll-line"></div>
+  </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════
-     P R O J E C T S
-═════════════════════════════════════════════════════════ -->
-<section id="projects" class="section">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="section-label reveal">// MY WORK</div>
-    <h2 class="section-title grad reveal">Featured Projects</h2>
-    <p class="section-sub mb-14 reveal">
-      Building AI solutions that make a real difference in healthcare and science.
-    </p>
-
-    <!-- Featured card (full width) -->
-    <div class="proj-card reveal mb-8" style="border:1px solid rgba(34,211,238,.35);">
-      <div class="grid md:grid-cols-2 gap-8 items-center">
-        <!-- Left: info -->
-        <div>
-          <div class="section-label mb-2">// FEATURED</div>
-          <h3 style="font-size:1.7rem;font-weight:800;color:var(--text-primary);margin-bottom:.7rem;">
-            🩺 Skin Cancer Prediction System
-          </h3>
-          <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:1.1rem;">
-            AI-powered skin lesion detection using Convolutional Neural Networks trained on the
-            HAM10000 dermatoscopy dataset. Classifies 7 lesion categories with high diagnostic accuracy.
-            Deployed as a live, interactive Streamlit web application with real-time inference.
-          </p>
-          <div class="mb-5">
-            <span class="badge">TensorFlow</span>
-            <span class="badge">CNN</span>
-            <span class="badge">Keras</span>
-            <span class="badge">Streamlit</span>
-            <span class="badge">Medical AI</span>
-            <span class="badge">OpenCV</span>
-            <span class="badge">HAM10000</span>
-          </div>
-          <div class="flex gap-3 flex-wrap">
-            <a class="btn-primary"
-               href="https://skincancerpredictions.streamlit.app/"
-               target="_blank" rel="noopener">
-              <i class="fas fa-external-link-alt"></i> 👉 Open Live Project
-            </a>
-            <a class="btn-outline" href="https://github.com/" target="_blank" rel="noopener">
-              <i class="fab fa-github"></i> GitHub
-            </a>
-          </div>
-        </div>
-        <!-- Right: visual -->
-        <div style="position:relative;">
-          <div class="glass p-6 text-center"
-               style="background:rgba(34,211,238,.05);border-color:rgba(34,211,238,.25);">
-            <div style="font-size:5rem;margin-bottom:.8rem;">🩺</div>
-            <div style="font-size:.78rem;font-family:'Space Mono',monospace;color:var(--cyan);
-                 letter-spacing:.1em;margin-bottom:1rem;">LIVE DEPLOYMENT</div>
-            <div class="space-y-2 text-left text-sm" style="color:var(--text-secondary);">
-              <div class="flex items-center gap-2">
-                <span style="color:var(--cyan);">✓</span> CNN-based classification
-              </div>
-              <div class="flex items-center gap-2">
-                <span style="color:var(--cyan);">✓</span> 7 skin lesion types
-              </div>
-              <div class="flex items-center gap-2">
-                <span style="color:var(--cyan);">✓</span> Real-time image upload & inference
-              </div>
-              <div class="flex items-center gap-2">
-                <span style="color:var(--cyan);">✓</span> Streamlit deployment
-              </div>
-              <div class="flex items-center gap-2">
-                <span style="color:var(--cyan);">✓</span> Medical-grade reporting
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Other projects grid -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-      <div class="proj-card reveal">
-        <div style="font-size:2rem;margin-bottom:.6rem;">🧬</div>
-        <h4 style="font-weight:800;font-size:1.1rem;color:var(--text-primary);margin-bottom:.5rem;">
-          Bioinformatics Sequence Analyser
-        </h4>
-        <p style="color:var(--text-secondary);font-size:.88rem;line-height:1.75;margin-bottom:.9rem;">
-          Python toolkit for DNA/RNA analysis, GC-content calculation, ORF detection,
-          and BLAST integration for computational biology workflows.
-        </p>
-        <div>
-          <span class="badge">Python</span>
-          <span class="badge">BioPython</span>
-          <span class="badge">BLAST</span>
-          <span class="badge">Genomics</span>
-        </div>
-        <div class="mt-4">
-          <span style="font-size:.75rem;color:var(--text-muted);
-                font-family:'Space Mono',monospace;">🔧 In Development</span>
-        </div>
-      </div>
-
-      <div class="proj-card reveal">
-        <div style="font-size:2rem;margin-bottom:.6rem;">🔬</div>
-        <h4 style="font-weight:800;font-size:1.1rem;color:var(--text-primary);margin-bottom:.5rem;">
-          Protein Structure Prediction
-        </h4>
-        <p style="color:var(--text-secondary);font-size:.88rem;line-height:1.75;margin-bottom:.9rem;">
-          LSTM-based ML pipeline predicting secondary protein structures from sequences,
-          benchmarked against PSIPRED on CASP targets.
-        </p>
-        <div>
-          <span class="badge">LSTM</span>
-          <span class="badge">BioPython</span>
-          <span class="badge">Scikit-learn</span>
-        </div>
-        <div class="mt-4">
-          <span style="font-size:.75rem;color:var(--text-muted);
-                font-family:'Space Mono',monospace;">🔬 Research Phase</span>
-        </div>
-      </div>
-
-      <div class="proj-card reveal">
-        <div style="font-size:2rem;margin-bottom:.6rem;">📈</div>
-        <h4 style="font-weight:800;font-size:1.1rem;color:var(--text-primary);margin-bottom:.5rem;">
-          COVID-19 Data Dashboard
-        </h4>
-        <p style="color:var(--text-secondary);font-size:.88rem;line-height:1.75;margin-bottom:.9rem;">
-          Interactive global COVID-19 statistics dashboard built with Streamlit and Plotly,
-          pulling live data from the Our World in Data API.
-        </p>
-        <div>
-          <span class="badge">Streamlit</span>
-          <span class="badge">Plotly</span>
-          <span class="badge">Pandas</span>
-          <span class="badge">REST API</span>
-        </div>
-        <div class="mt-4">
-          <span style="font-size:.75rem;color:var(--cyan);
-                font-family:'Space Mono',monospace;">✅ Complete</span>
-        </div>
-      </div>
-
+<!-- TECH STACK MARQUEE -->
+<section id="techstack">
+  <div class="tech-label">TECH STACK</div>
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="tech-item"><span class="tech-icon">🐍</span> Python</div>
+      <div class="tech-item"><span class="tech-icon">🧠</span> TensorFlow</div>
+      <div class="tech-item"><span class="tech-icon">🔥</span> PyTorch</div>
+      <div class="tech-item"><span class="tech-icon">📊</span> Scikit-Learn</div>
+      <div class="tech-item"><span class="tech-icon">🌊</span> Streamlit</div>
+      <div class="tech-item"><span class="tech-icon">🐼</span> Pandas</div>
+      <div class="tech-item"><span class="tech-icon">👁️</span> OpenCV</div>
+      <div class="tech-item"><span class="tech-icon">📡</span> Git</div>
+      <div class="tech-item"><span class="tech-icon">🧬</span> BioPython</div>
+      <div class="tech-item"><span class="tech-icon">🖥️</span> Linux</div>
+      <!-- duplicate for seamless loop -->
+      <div class="tech-item"><span class="tech-icon">🐍</span> Python</div>
+      <div class="tech-item"><span class="tech-icon">🧠</span> TensorFlow</div>
+      <div class="tech-item"><span class="tech-icon">🔥</span> PyTorch</div>
+      <div class="tech-item"><span class="tech-icon">📊</span> Scikit-Learn</div>
+      <div class="tech-item"><span class="tech-icon">🌊</span> Streamlit</div>
+      <div class="tech-item"><span class="tech-icon">🐼</span> Pandas</div>
+      <div class="tech-item"><span class="tech-icon">👁️</span> OpenCV</div>
+      <div class="tech-item"><span class="tech-icon">📡</span> Git</div>
+      <div class="tech-item"><span class="tech-icon">🧬</span> BioPython</div>
+      <div class="tech-item"><span class="tech-icon">🖥️</span> Linux</div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════
-     S E R V I C E S
-═════════════════════════════════════════════════════════ -->
-<section id="services" class="section"
-         style="background:linear-gradient(180deg,transparent,rgba(10,22,40,.35),transparent);">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="section-label reveal">// WHAT I OFFER</div>
-    <h2 class="section-title grad reveal">Services</h2>
-    <p class="section-sub mb-14 reveal">From concept to deployment — I build intelligent solutions end-to-end.</p>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <div class="section-tag">NEURAL CAPABILITIES</div>
+    <h2 class="section-title">Skills <span class="gradient-text">Dashboard</span></h2>
+    <p class="section-sub">Proficiency metrics across AI/ML domains</p>
+  </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-      <div class="glass service-card reveal">
-        <div class="service-icon"><i class="fas fa-brain" style="color:var(--cyan);"></i></div>
-        <h4 class="font-bold text-base mb-2" style="color:var(--text-primary);">AI Model Development</h4>
-        <p style="color:var(--text-muted);font-size:.83rem;line-height:1.75;">
-          Custom CNN, LSTM, and transformer models trained and optimised for your specific domain and dataset.
-        </p>
+  <div class="skills-grid">
+    <!-- Circular Skills -->
+    <div class="skill-circles">
+      <div class="skill-circle-item" data-skill="Python" data-pct="95">
+        <svg class="ring-svg" viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="50"/>
+          <circle class="ring-fill" cx="60" cy="60" r="50" stroke="#00f5ff"/>
+        </svg>
+        <div class="ring-inner"><span class="ring-pct">95%</span><span class="ring-name">Python</span></div>
       </div>
-
-      <div class="glass service-card reveal">
-        <div class="service-icon"><i class="fas fa-chart-line" style="color:var(--blue);"></i></div>
-        <h4 class="font-bold text-base mb-2" style="color:var(--text-primary);">Data Analysis</h4>
-        <p style="color:var(--text-muted);font-size:.83rem;line-height:1.75;">
-          End-to-end data pipelines — cleaning, EDA, visualisation, and statistical modelling with Python.
-        </p>
+      <div class="skill-circle-item" data-skill="ML" data-pct="88">
+        <svg class="ring-svg" viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="50"/>
+          <circle class="ring-fill" cx="60" cy="60" r="50" stroke="#7c3aed"/>
+        </svg>
+        <div class="ring-inner"><span class="ring-pct">88%</span><span class="ring-name">Machine Learning</span></div>
       </div>
-
-      <div class="glass service-card reveal">
-        <div class="service-icon"><i class="fas fa-dna" style="color:var(--pink);"></i></div>
-        <h4 class="font-bold text-base mb-2" style="color:var(--text-primary);">Research Assistance</h4>
-        <p style="color:var(--text-muted);font-size:.83rem;line-height:1.75;">
-          Bioinformatics analysis, literature review support, and reproducible computational workflows.
-        </p>
+      <div class="skill-circle-item" data-skill="DL" data-pct="82">
+        <svg class="ring-svg" viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="50"/>
+          <circle class="ring-fill" cx="60" cy="60" r="50" stroke="#06b6d4"/>
+        </svg>
+        <div class="ring-inner"><span class="ring-pct">82%</span><span class="ring-name">Deep Learning</span></div>
       </div>
-
-      <div class="glass service-card reveal">
-        <div class="service-icon"><i class="fas fa-globe" style="color:var(--cyan);"></i></div>
-        <h4 class="font-bold text-base mb-2" style="color:var(--text-primary);">Web Applications</h4>
-        <p style="color:var(--text-muted);font-size:.83rem;line-height:1.75;">
-          Rapid deployment of AI-powered web apps using Streamlit, with clean UI and production-ready code.
-        </p>
+      <div class="skill-circle-item" data-skill="Bio" data-pct="85">
+        <svg class="ring-svg" viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="50"/>
+          <circle class="ring-fill" cx="60" cy="60" r="50" stroke="#10b981"/>
+        </svg>
+        <div class="ring-inner"><span class="ring-pct">85%</span><span class="ring-name">Bioinformatics</span></div>
       </div>
+      <div class="skill-circle-item" data-skill="CV" data-pct="80">
+        <svg class="ring-svg" viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="50"/>
+          <circle class="ring-fill" cx="60" cy="60" r="50" stroke="#f59e0b"/>
+        </svg>
+        <div class="ring-inner"><span class="ring-pct">80%</span><span class="ring-name">Computer Vision</span></div>
+      </div>
+      <div class="skill-circle-item" data-skill="TF" data-pct="83">
+        <svg class="ring-svg" viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="50"/>
+          <circle class="ring-fill" cx="60" cy="60" r="50" stroke="#ef4444"/>
+        </svg>
+        <div class="ring-inner"><span class="ring-pct">83%</span><span class="ring-name">TensorFlow</span></div>
+      </div>
+    </div>
 
+    <!-- Skill Cards -->
+    <div class="skill-cards">
+      <div class="skill-card" style="--card-color:#00f5ff">
+        <div class="sk-icon">🐍</div>
+        <div class="sk-body">
+          <div class="sk-name">Python Development</div>
+          <div class="sk-bar"><div class="sk-fill" style="width:95%;background:#00f5ff"></div></div>
+          <div class="sk-tags"><span>NumPy</span><span>Pandas</span><span>FastAPI</span></div>
+        </div>
+      </div>
+      <div class="skill-card" style="--card-color:#7c3aed">
+        <div class="sk-icon">🤖</div>
+        <div class="sk-body">
+          <div class="sk-name">Machine Learning</div>
+          <div class="sk-bar"><div class="sk-fill" style="width:88%;background:#7c3aed"></div></div>
+          <div class="sk-tags"><span>Sklearn</span><span>XGBoost</span><span>Random Forest</span></div>
+        </div>
+      </div>
+      <div class="skill-card" style="--card-color:#06b6d4">
+        <div class="sk-icon">🧠</div>
+        <div class="sk-body">
+          <div class="sk-name">Deep Learning</div>
+          <div class="sk-bar"><div class="sk-fill" style="width:82%;background:#06b6d4"></div></div>
+          <div class="sk-tags"><span>CNNs</span><span>Transformers</span><span>RNNs</span></div>
+        </div>
+      </div>
+      <div class="skill-card" style="--card-color:#10b981">
+        <div class="sk-icon">🧬</div>
+        <div class="sk-body">
+          <div class="sk-name">Bioinformatics</div>
+          <div class="sk-bar"><div class="sk-fill" style="width:85%;background:#10b981"></div></div>
+          <div class="sk-tags"><span>BioPython</span><span>Genomics</span><span>Proteomics</span></div>
+        </div>
+      </div>
+      <div class="skill-card" style="--card-color:#f59e0b">
+        <div class="sk-icon">👁️</div>
+        <div class="sk-body">
+          <div class="sk-name">Computer Vision</div>
+          <div class="sk-bar"><div class="sk-fill" style="width:80%;background:#f59e0b"></div></div>
+          <div class="sk-tags"><span>OpenCV</span><span>YOLO</span><span>ResNet</span></div>
+        </div>
+      </div>
+      <div class="skill-card" style="--card-color:#ef4444">
+        <div class="sk-icon">⚕️</div>
+        <div class="sk-body">
+          <div class="sk-name">Healthcare AI</div>
+          <div class="sk-bar"><div class="sk-fill" style="width:87%;background:#ef4444"></div></div>
+          <div class="sk-tags"><span>Medical Imaging</span><span>Clinical AI</span><span>Diagnostics</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════
-     C O N T A C T
-═════════════════════════════════════════════════════════ -->
-<section id="contact" class="section">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="section-label reveal">// GET IN TOUCH</div>
-    <h2 class="section-title grad reveal">Contact Me</h2>
-    <p class="section-sub mb-14 reveal">Open to research collaborations, freelance projects, and full-time opportunities.</p>
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header">
+    <div class="section-tag">RESEARCH LAB</div>
+    <h2 class="section-title">Project <span class="gradient-text">Laboratory</span></h2>
+    <p class="section-sub">Production-grade AI systems solving real-world problems</p>
+  </div>
 
-    <div class="grid md:grid-cols-3 gap-8">
-
-      <!-- Form -->
-      <div class="md:col-span-2 reveal">
-        <div class="glass p-8">
-          <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
-            <div class="grid sm:grid-cols-2 gap-5 mb-5">
-              <div>
-                <label class="block text-sm font-bold mb-2"
-                       style="color:var(--text-secondary);">Your Name</label>
-                <input type="text" name="name" placeholder="Ali Hassan"
-                       class="form-input" required />
-              </div>
-              <div>
-                <label class="block text-sm font-bold mb-2"
-                       style="color:var(--text-secondary);">Email</label>
-                <input type="email" name="email" placeholder="you@example.com"
-                       class="form-input" required />
-              </div>
-            </div>
-            <div class="mb-5">
-              <label class="block text-sm font-bold mb-2"
-                     style="color:var(--text-secondary);">Subject</label>
-              <input type="text" name="subject"
-                     placeholder="Collaboration / Research / Freelance …"
-                     class="form-input" />
-            </div>
-            <div class="mb-6">
-              <label class="block text-sm font-bold mb-2"
-                     style="color:var(--text-secondary);">Message</label>
-              <textarea name="message" rows="5"
-                        placeholder="Tell me about your project or idea …"
-                        class="form-input" required style="resize:vertical;"></textarea>
-            </div>
-            <button type="submit" class="btn-primary w-full justify-center">
-              <i class="fas fa-paper-plane"></i> Send Message
-            </button>
-            <div id="form-status" class="mt-4 text-center text-sm font-medium hidden"></div>
-          </form>
+  <!-- FEATURED PROJECT -->
+  <div class="featured-project">
+    <div class="fp-label">⭐ FEATURED RESEARCH</div>
+    <div class="fp-inner">
+      <div class="fp-left">
+        <div class="fp-badges">
+          <span class="badge-tech">Computer Vision</span>
+          <span class="badge-tech">Healthcare AI</span>
+          <span class="badge-live">🟢 Live</span>
         </div>
-      </div>
-
-      <!-- Info -->
-      <div class="reveal">
-        <div class="glass p-7 h-full">
-          <h3 class="font-bold text-base mb-6" style="color:var(--text-primary);">📌 Direct Contact</h3>
-          <div class="space-y-5">
-            <div class="flex items-start gap-3">
-              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                   style="background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.25);">
-                <i class="fas fa-envelope text-sm" style="color:var(--cyan);"></i>
-              </div>
-              <div>
-                <div class="font-bold text-sm" style="color:var(--text-primary);">Email</div>
-                <a href="mailto:rehanshafiq6540@gmail.com"
-                   style="color:var(--text-muted);font-size:.8rem;font-family:'Space Mono',monospace;
-                   word-break:break-all;">rehanshafiq6540@gmail.com</a>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                   style="background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.25);">
-                <i class="fas fa-university text-sm" style="color:var(--blue);"></i>
-              </div>
-              <div>
-                <div class="font-bold text-sm" style="color:var(--text-primary);">University</div>
-                <div style="color:var(--text-muted);font-size:.82rem;">University of Agriculture Faisalabad, Pakistan</div>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                   style="background:rgba(244,114,182,.12);border:1px solid rgba(244,114,182,.25);">
-                <i class="fas fa-map-marker-alt text-sm" style="color:var(--pink);"></i>
-              </div>
-              <div>
-                <div class="font-bold text-sm" style="color:var(--text-primary);">Location</div>
-                <div style="color:var(--text-muted);font-size:.82rem;">Faisalabad, Punjab, Pakistan 🇵🇰</div>
-              </div>
-            </div>
-          </div>
-          <hr class="my-6" style="border-color:var(--border);" />
-          <a href="https://skincancerpredictions.streamlit.app/"
-             target="_blank" rel="noopener"
-             class="btn-primary w-full justify-center">
-            <i class="fas fa-external-link-alt"></i> 👉 Live Demo
+        <h3 class="fp-title">Skin Cancer Prediction System</h3>
+        <p class="fp-desc">A deep learning-powered clinical decision support system for skin cancer detection using dermoscopic image analysis. Trained on ISIC dataset with EfficientNet backbone achieving >90% accuracy across 7 cancer types.</p>
+        <div class="fp-stack">
+          <span>Python</span><span>TensorFlow</span><span>EfficientNet</span><span>Streamlit</span><span>OpenCV</span>
+        </div>
+        <div class="fp-metrics">
+          <div class="metric"><span class="m-val">90%+</span><span class="m-label">Accuracy</span></div>
+          <div class="metric"><span class="m-val">7</span><span class="m-label">Cancer Types</span></div>
+          <div class="metric"><span class="m-val">ISIC</span><span class="m-label">Dataset</span></div>
+        </div>
+        <div class="fp-btns">
+          <a href="https://skincancerpredictions.streamlit.app/" target="_blank" class="btn-live">
+            <span class="live-dot"></span> Live Demo
+          </a>
+          <a href="https://github.com/rehanshafiq" target="_blank" class="btn-gh">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
           </a>
         </div>
       </div>
+      <div class="fp-right">
+        <div class="fp-preview">
+          <div class="preview-bar">
+            <div class="preview-dots"><span></span><span></span><span></span></div>
+            <div class="preview-url">skincancerpredictions.streamlit.app</div>
+          </div>
+          <div class="preview-frame">
+            <div class="preview-loading">
+              <div class="preview-inner-mockup">
+                <div class="mock-header">🔬 Skin Cancer AI Detector</div>
+                <div class="mock-upload">📤 Upload Dermoscopic Image</div>
+                <div class="mock-result">
+                  <div class="mock-bar" style="width:92%;background:#10b981">Melanocytic Nevi — 92% confidence</div>
+                  <div class="mock-bar" style="width:45%;background:#f59e0b">Melanoma — 45% confidence</div>
+                  <div class="mock-bar" style="width:22%;background:#ef4444">BCC — 22% confidence</div>
+                </div>
+                <a href="https://skincancerpredictions.streamlit.app/" target="_blank" class="mock-open-btn">→ Open Live Demo</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Other projects -->
+  <div class="projects-grid">
+    <div class="proj-card">
+      <div class="proj-icon">🧬</div>
+      <h4>Protein Structure Predictor</h4>
+      <p>ML model for secondary structure prediction using sequence features and LSTM networks.</p>
+      <div class="proj-stack"><span>Python</span><span>BioPython</span><span>LSTM</span></div>
+      <div class="proj-footer">
+        <a href="#" class="proj-link">View Project →</a>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-icon">🔬</div>
+      <h4>Gene Expression Analyzer</h4>
+      <p>RNA-seq data analysis pipeline with differential expression and pathway enrichment.</p>
+      <div class="proj-stack"><span>R</span><span>Python</span><span>DESeq2</span></div>
+      <div class="proj-footer">
+        <a href="#" class="proj-link">View Project →</a>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-icon">📊</div>
+      <h4>Drug-Target Interaction Model</h4>
+      <p>Graph neural network for predicting drug-target binding affinity in pharmaceutical research.</p>
+      <div class="proj-stack"><span>PyTorch</span><span>GNN</span><span>RDKit</span></div>
+      <div class="proj-footer">
+        <a href="#" class="proj-link">View Project →</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════
-     F O O T E R
-═════════════════════════════════════════════════════════ -->
-<footer class="relative z-10 py-10"
-        style="border-top:1px solid var(--border);
-               background:rgba(5,15,34,.7);backdrop-filter:blur(10px);">
-  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-    <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-lg flex items-center justify-center text-base"
-           style="background:linear-gradient(135deg,var(--cyan),var(--blue));">🧬</div>
-      <div>
-        <div class="font-bold text-sm" style="color:var(--text-primary);">Rehan Shafique</div>
-        <div style="color:var(--text-muted);font-size:.75rem;">University of Agriculture Faisalabad</div>
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-header">
+    <div class="section-tag">JOURNEY</div>
+    <h2 class="section-title">Research <span class="gradient-text">Timeline</span></h2>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item ti-left">
+      <div class="ti-content">
+        <div class="ti-date">2021</div>
+        <div class="ti-card">
+          <div class="ti-icon">🎓</div>
+          <h4>B.Sc. Bioinformatics</h4>
+          <p>Enrolled at University of Agriculture Faisalabad. Began intersection of biology and computing.</p>
+          <div class="ti-tags"><span>UAF</span><span>Pakistan</span></div>
+        </div>
       </div>
     </div>
-    <div style="color:var(--text-muted);font-size:.82rem;text-align:center;">
-      © 2026 Rehan Shafique · Built with 🧬 AI & Passion
+    <div class="timeline-item ti-right">
+      <div class="ti-content">
+        <div class="ti-date">2022</div>
+        <div class="ti-card">
+          <div class="ti-icon">🐍</div>
+          <h4>ML & Python Mastery</h4>
+          <p>Deep dive into Python, machine learning algorithms, and data science fundamentals.</p>
+          <div class="ti-tags"><span>Scikit-Learn</span><span>Pandas</span></div>
+        </div>
+      </div>
     </div>
-    <div class="flex gap-3">
-      <a href="mailto:rehanshafiq6540@gmail.com"
-         class="w-9 h-9 rounded-lg flex items-center justify-center"
-         style="background:rgba(30,58,95,.5);border:1px solid var(--border);
-                color:var(--text-secondary);transition:all .2s;"
-         onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--cyan)';"
-         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)';">
-        <i class="fas fa-envelope text-sm"></i>
-      </a>
-      <a href="https://github.com/" target="_blank" rel="noopener"
-         class="w-9 h-9 rounded-lg flex items-center justify-center"
-         style="background:rgba(30,58,95,.5);border:1px solid var(--border);
-                color:var(--text-secondary);transition:all .2s;"
-         onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--cyan)';"
-         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)';">
-        <i class="fab fa-github text-sm"></i>
-      </a>
-      <a href="https://linkedin.com/" target="_blank" rel="noopener"
-         class="w-9 h-9 rounded-lg flex items-center justify-center"
-         style="background:rgba(30,58,95,.5);border:1px solid var(--border);
-                color:var(--text-secondary);transition:all .2s;"
-         onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)';"
-         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)';">
-        <i class="fab fa-linkedin text-sm"></i>
-      </a>
+    <div class="timeline-item ti-left">
+      <div class="ti-content">
+        <div class="ti-date">2023</div>
+        <div class="ti-card">
+          <div class="ti-icon">🧠</div>
+          <h4>Deep Learning Research</h4>
+          <p>Explored CNNs, Transformers, and advanced neural architectures for biological sequence analysis.</p>
+          <div class="ti-tags"><span>TensorFlow</span><span>PyTorch</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item ti-right">
+      <div class="ti-content">
+        <div class="ti-date">2024</div>
+        <div class="ti-card">
+          <div class="ti-icon">⚕️</div>
+          <h4>Healthcare AI Projects</h4>
+          <p>Built production AI systems for clinical diagnostics, including the Skin Cancer Prediction System.</p>
+          <div class="ti-tags"><span>Computer Vision</span><span>Streamlit</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item ti-left">
+      <div class="ti-content">
+        <div class="ti-date">2025</div>
+        <div class="ti-card ti-current">
+          <div class="ti-icon">🚀</div>
+          <h4>AI Research & Innovation</h4>
+          <p>Expanding into LLMs, multi-modal AI, and precision medicine applications. Seeking research collaborations.</p>
+          <div class="ti-tags"><span>LLMs</span><span>Precision Medicine</span><span>Open to Work</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <div class="section-tag">GET IN TOUCH</div>
+    <h2 class="section-title">Contact <span class="gradient-text">Lab</span></h2>
+    <p class="section-sub">Open to research collaborations, internships, and AI opportunities</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="ci-item">
+        <div class="ci-icon">📧</div>
+        <div class="ci-body">
+          <div class="ci-label">Email</div>
+          <a href="mailto:rehanshafiq6540@gmail.com" class="ci-val">rehanshafiq6540@gmail.com</a>
+        </div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-icon">🎓</div>
+        <div class="ci-body">
+          <div class="ci-label">University</div>
+          <div class="ci-val">University of Agriculture Faisalabad</div>
+        </div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-icon">📍</div>
+        <div class="ci-body">
+          <div class="ci-label">Location</div>
+          <div class="ci-val">Faisalabad, Pakistan</div>
+        </div>
+      </div>
+      <div class="social-row">
+        <a href="https://github.com/rehanshafiq" target="_blank" class="social-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://linkedin.com/in/rehanshafique" target="_blank" class="social-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="mailto:rehanshafiq6540@gmail.com" class="social-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          Email
+        </a>
+      </div>
+    </div>
+    <form class="contact-form" id="contactForm">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" placeholder="Your name" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label>Subject</label>
+        <input type="text" placeholder="Research collaboration / Internship / ...">
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea rows="4" placeholder="Tell me about your project or opportunity..." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">
+        <span class="submit-text">Send Message</span>
+        <div class="submit-glow"></div>
+      </button>
+      <div class="form-success" id="formSuccess">
+        <span>✅</span> Message sent successfully! I'll reply soon.
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span class="logo-bracket">[</span><span class="logo-name">RS</span><span class="logo-bracket">]</span>
+    </div>
+    <p class="footer-tagline">AI Developer · ML Engineer · Bioinformatics Researcher</p>
+    <p class="footer-copy">© 2025 Rehan Shafique · University of Agriculture Faisalabad · Pakistan</p>
+    <div class="footer-links">
+      <a href="#hero">Home</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="resume.html" target="_blank">Resume</a>
+      <a href="#contact">Contact</a>
     </div>
   </div>
 </footer>
 
-<!-- ─── Back-to-top ────────────────────────────────────── -->
-<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"
-        aria-label="Back to top">
-  <i class="fas fa-chevron-up"></i>
-</button>
+<!-- AI CHATBOT -->
+<div id="chatbot-btn" onclick="toggleChat()">
+  <div class="chat-btn-inner">
+    <span class="chat-btn-icon">🤖</span>
+    <div class="chat-pulse"></div>
+  </div>
+  <div class="chat-label">Rehan AI</div>
+</div>
 
-<!-- ════════════════════════════════════════════════════════
-     J A V A S C R I P T
-═════════════════════════════════════════════════════════ -->
-<script>
-/* ─── Typing animation ────────────────────────────────── */
-(function(){
-  const lines  = ["Hi, I'm Rehan Shafique", "AI Developer &", "Bioinformatics Student"];
-  const target = document.getElementById('typing-target');
-  let lineIdx  = 0, charIdx = 0, deleting = false;
-
-  function tick(){
-    const current = lines[lineIdx];
-    if(!deleting){
-      target.textContent = current.slice(0, ++charIdx);
-      if(charIdx === current.length){
-        if(lineIdx === lines.length - 1){
-          // Final line reached — stop
-          // Apply gradient after final text settles
-          target.style.background =
-            'linear-gradient(135deg,var(--cyan) 0%,var(--blue) 50%,var(--pink) 100%)';
-          target.style.webkitBackgroundClip = 'text';
-          target.style.webkitTextFillColor  = 'transparent';
-          target.style.backgroundClip       = 'text';
-          return;
-        }
-        setTimeout(()=>{ deleting=true; tick(); }, 1100);
-        return;
-      }
-    } else {
-      target.textContent = current.slice(0, --charIdx);
-      if(charIdx === 0){
-        deleting = false;
-        lineIdx  = (lineIdx + 1) % lines.length;
-        setTimeout(tick, 350);
-        return;
-      }
-    }
-    setTimeout(tick, deleting ? 40 : 65);
-  }
-  setTimeout(tick, 600);
-})();
-
-/* ─── Navbar scroll effect ────────────────────────────── */
-window.addEventListener('scroll', function(){
-  document.getElementById('navbar')
-    .classList.toggle('scrolled', window.scrollY > 50);
-  document.getElementById('back-top')
-    .classList.toggle('show', window.scrollY > 400);
-});
-
-/* ─── Scroll reveal ───────────────────────────────────── */
-const revealObs = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){ e.target.classList.add('visible'); }
-  });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-/* ─── Skill bars ──────────────────────────────────────── */
-const skills = [
-  { label:'Python',                   pct:95 },
-  { label:'Machine Learning',         pct:88 },
-  { label:'Deep Learning / TensorFlow',pct:85 },
-  { label:'Data Science & Viz',       pct:82 },
-  { label:'Bioinformatics',           pct:78 },
-  { label:'Streamlit Deployment',     pct:90 },
-  { label:'Research & Writing',       pct:80 },
-];
-const barContainer = document.getElementById('skill-bars');
-skills.forEach(s=>{
-  const div = document.createElement('div');
-  div.innerHTML=`
-    <div style="display:flex;justify-content:space-between;
-         font-size:.78rem;color:var(--text-muted);
-         font-family:'Space Mono',monospace;margin-bottom:.3rem;">
-      <span>${s.label}</span><span>${s.pct}%</span>
+<div id="chatbot-window" class="chat-hidden">
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <div class="chat-avatar">🤖</div>
+      <div>
+        <div class="chat-name">Rehan AI</div>
+        <div class="chat-status"><span class="status-dot"></span> Online</div>
+      </div>
     </div>
-    <div class="skill-track">
-      <div class="skill-fill" data-pct="${s.pct}"></div>
-    </div>`;
-  barContainer.appendChild(div);
-});
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Ask me about Rehan..." onkeypress="if(event.key==='Enter')sendMsg()">
+    <button onclick="sendMsg()" class="chat-send">→</button>
+  </div>
+</div>
 
-// Animate bars on scroll
-const barObs = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.querySelectorAll('.skill-fill').forEach(bar=>{
-        bar.style.width = bar.dataset.pct + '%';
-      });
-      barObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.3 });
-barObs.observe(barContainer);
-
-/* ─── Badge cloud ─────────────────────────────────────── */
-const badges = [
-  'Python','Machine Learning','Deep Learning','TensorFlow','Keras',
-  'Scikit-learn','Pandas','NumPy','Matplotlib','Streamlit','OpenCV',
-  'Bioinformatics','Data Science','CNN','NLP','Transfer Learning',
-  'Git','Linux','SQL','REST API',
-];
-const cloud = document.getElementById('badge-cloud');
-badges.forEach(b=>{
-  const span = document.createElement('span');
-  span.className = 'badge';
-  span.textContent = b;
-  cloud.appendChild(span);
-});
-
-/* ─── Theme toggle ────────────────────────────────────── */
-const themeBtn = document.getElementById('theme-btn');
-themeBtn.addEventListener('click', ()=>{
-  const html = document.documentElement;
-  const isDark = html.getAttribute('data-theme') === 'dark';
-  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  themeBtn.textContent = isDark ? '🌙' : '☀️';
-});
-
-/* ─── Mobile menu ─────────────────────────────────────── */
-document.getElementById('hamburger').addEventListener('click', ()=>{
-  document.getElementById('mobile-menu').classList.add('open');
-});
-document.getElementById('close-menu').addEventListener('click', closeMobileMenu);
-function closeMobileMenu(){
-  document.getElementById('mobile-menu').classList.remove('open');
-}
-
-/* ─── Contact form ────────────────────────────────────── */
-function handleSubmit(e){
-  e.preventDefault();
-  const form   = e.target;
-  const name   = form.name.value.trim();
-  const email  = form.email.value.trim();
-  const msg    = form.message.value.trim();
-  const status = document.getElementById('form-status');
-
-  if(!name || !email || !msg){
-    status.textContent = '⚠️ Please fill in all required fields.';
-    status.style.color = '#f59e0b';
-    status.classList.remove('hidden');
-    return;
-  }
-
-  // Simulate send
-  status.textContent = '✅ Message sent! I'll get back to you soon.';
-  status.style.color = 'var(--cyan)';
-  status.classList.remove('hidden');
-  form.reset();
-  setTimeout(()=> status.classList.add('hidden'), 5000);
-}
-
-/* ─── Smooth anchor scroll (fallback for older browsers) ── */
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click', function(e){
-    const target = document.querySelector(this.getAttribute('href'));
-    if(target){
-      e.preventDefault();
-      target.scrollIntoView({ behavior:'smooth', block:'start' });
-    }
-  });
-});
-</script>
-
+<!-- SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="brain.js"></script>
+<script src="chatbot.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
