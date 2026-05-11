@@ -8,7 +8,7 @@ import streamlit as st
 
 # ── Page config ────────────────────────────────────────────
 st.set_page_config(
-    page_title="Rehan Shafique | AI Developer",
+    page_title="farhan Shafique | AI Developer",
     page_icon="🧬",
     layout="wide",
     initial_sidebar_state="expanded",
